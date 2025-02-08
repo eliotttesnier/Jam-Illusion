@@ -61,7 +61,7 @@ Game::Game()
     _interactText.setString("Appuyez sur E (Clavier) ou B (Manette) pour interagir...");
 
     _player.setGame(this);
-    setCurrentRoom(1);
+    setCurrentRoom(0);
 }
 
 Game::~Game()
