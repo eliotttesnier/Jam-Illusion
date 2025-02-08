@@ -55,4 +55,9 @@ class Game {
 
         // Menus
         MainMenu _mainMenu;
+
+        // Interactions HUD
+        bool _canInteract;
+        sf::Text _interactText;
+        sf::Font _interactFont;
 };

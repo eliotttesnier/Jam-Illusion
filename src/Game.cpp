@@ -31,6 +31,15 @@ Game::Game()
     _currentScene = SCENE::GAME;
     _mainMenu = MainMenu();
 
+    // Interactions HUD
+    _canInteract = false;
+    _interactFont.loadFromFile("assets/fonts/font.otf");
+    _interactText.setFont(_interactFont);
+    _interactText.setCharacterSize(50);
+    _interactText.setScale(0.25, 0.25);
+    _interactText.setFillColor(sf::Color::White);
+    _interactText.setString("Appuyez sur E (Clavier) ou B (Manette) pour interagir...");
+
     _player.setGame(this);
 }
 
@@ -70,6 +79,35 @@ void Game::update()
     _player.update(_deltaTime, *_rooms[_currentRoom]);
     _view.setCenter(_player.getCenter());
     _window.setView(_view);
+
+    // Interactions HUD
+    for (auto &Object : _rooms[_currentRoom]->getObjects()) {
+        if (Object.isColliding(_player.getSprite().getGlobalBounds())) {
+            _canInteract = true;
+        } else {
+            _canInteract = false;
+        }
+    }
+    _interactText.setPosition(_view.getCenter().x - _view.getSize().x / 2 + 2, _view.getCenter().y - _view.getSize().y / 2 - 2);
+
+    static sf::Clock timer;
+    sf::Uint8 opacity = _interactText.getFillColor().a;
+
+    if (timer.getElapsedTime().asSeconds() >= 0.01f) {
+        if (_canInteract) {
+            if (opacity >= 250)
+                opacity = 255;
+            else
+                opacity += 5;
+        } else {
+            if (opacity <= 5)
+                opacity = 0;
+            else
+                opacity -= 5;
+        }
+        _interactText.setFillColor(sf::Color(255, 255, 255, opacity));
+        timer.restart();
+    }
 }
 
 void Game::draw()
@@ -77,6 +115,8 @@ void Game::draw()
     _window.clear();
     _rooms[_currentRoom]->draw(_window);
     _player.draw(_window);
+    _interactText.setFont(_interactFont);
+    _window.draw(_interactText);
     _window.display();
 }
 
