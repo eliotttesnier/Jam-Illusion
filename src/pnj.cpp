@@ -7,6 +7,7 @@
 
 #include "pnj.hpp"
 #include "dialogueLoader.hpp"
+#include "FontManager.hpp"
 #include <iostream>
 
 sf::Clock PNJ::_interactionClock;
@@ -31,12 +32,11 @@ PNJ::PNJ(const sf::Vector2f& position, const std::string& dialogueFile)
         _dialogues.push_back("...");
     }
 
-    if (!_font.loadFromFile("assets/fonts/font.otf")) {
-        std::cerr << "Error loading font in PNJ" << std::endl;
-        // Set a fallback or throw an exception if font is critical
-        return;
+    sf::Font* font = FontManager::getInstance().getFont("assets/fonts/font.otf");
+    if (!font) {
+        throw std::runtime_error("Failed to load font");
     }
-    _dialogueText.setFont(_font);
+    _dialogueText.setFont(*font);
     _dialogueText.setCharacterSize(30);
     const sf::Vector2f scale{0.33f, 0.33f};
     _dialogueText.setScale(scale);

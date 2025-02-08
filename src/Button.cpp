@@ -5,21 +5,22 @@
 ** Button
 */
 #include "Button.hpp"
+#include "FontManager.hpp"
 #include <SFML/Graphics.hpp>
 #include <iostream>
 
 Button::Button(const std::string &label, sf::Vector2f position, sf::Vector2f size, std::function<void()> action)
 {
-    if (!font.loadFromFile("assets/fonts/font.otf")) {
-        std::cerr << "Error loading font in Button" << std::endl;
-        return;
+    sf::Font* font = FontManager::getInstance().getFont("assets/fonts/font.otf");
+    if (!font) {
+        throw std::runtime_error("Failed to load font");
     }
 
     shape.setSize(size);
     shape.setPosition(position);
     shape.setFillColor(sf::Color(100, 100, 250));
 
-    text.setFont(font);
+    text.setFont(*font);
     text.setString(label);
     text.setCharacterSize(24);
     text.setFillColor(sf::Color::White);

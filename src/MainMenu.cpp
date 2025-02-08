@@ -1,12 +1,14 @@
 #include "MainMenu.hpp"
+#include "FontManager.hpp"
 #include <iostream>
 
 MainMenu::MainMenu() : selectedIndex(0) {
-    if (!font.loadFromFile("assets/fonts/font.otf")) {
+    sf::Font* font = FontManager::getInstance().getFont("assets/fonts/font.otf");
+    if (!font) {
         throw std::runtime_error("Failed to load font");
     }
 
-    title.setFont(font);
+    title.setFont(*font);
     title.setString("Menu Principal");
     title.setCharacterSize(50);
     title.setFillColor(sf::Color::White);
@@ -23,7 +25,7 @@ MainMenu::MainMenu() : selectedIndex(0) {
         buttons.push_back(button);
 
         sf::Text text;
-        text.setFont(font);
+        text.setFont(*font);
         text.setString(texts[i]);
         text.setCharacterSize(30);
         text.setFillColor(sf::Color::Black);

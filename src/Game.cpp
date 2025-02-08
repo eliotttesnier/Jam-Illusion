@@ -12,6 +12,7 @@
 #include "ThirdRoom.hpp"
 #include "FourthRoom.hpp"
 #include "Final.hpp"
+#include "FontManager.hpp"
 
 Game::Game()
 {
@@ -52,11 +53,11 @@ Game::Game()
 
     // Interactions HUD
     _canInteract = false;
-    if (!_interactFont.loadFromFile("assets/fonts/font.otf")) {
-        std::cerr << "Error loading font in Game" << std::endl;
-        return;
+    sf::Font* font = FontManager::getInstance().getFont("assets/fonts/font.otf");
+    if (!font) {
+        throw std::runtime_error("Failed to load font");
     }
-    _interactText.setFont(_interactFont);
+    _interactText.setFont(*font);
     _interactText.setCharacterSize(50);
     _interactText.setScale(0.25, 0.25);
     _interactText.setFillColor(sf::Color(255, 255, 255, 0));

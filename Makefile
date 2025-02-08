@@ -22,6 +22,7 @@ SRC =   src/main.cpp					\
 		src/Object.cpp					\
 		src/dialogueLoader.cpp			\
 		src/pnj.cpp						\
+		src/FontManager.cpp				\
 		src/rooms/Room.cpp				\
 		src/rooms/Exterior.cpp			\
 		src/rooms/FirstRoom.cpp			\
@@ -37,7 +38,7 @@ TEST_SRC =  tests/tests.cpp
 INCLUDES = -I./src/ -I./src/rooms/
 
 CFLAGS =	-std=c++20 -Wall -Wextra -Werror -Wno-unused-parameter \
-			-Wno-unused-variable -g
+			-Wno-unused-variable
 
 LIBS =  -lsfml-window -lsfml-graphics -lsfml-system -lsfml-audio \
 		-lsfml-network

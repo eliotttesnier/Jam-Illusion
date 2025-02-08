@@ -6,14 +6,15 @@
 */
 
 #include "PauseMenu.hpp"
+#include "FontManager.hpp"
 #include <iostream>
 
 PauseMenu::PauseMenu() {
-    if (!font.loadFromFile("assets/fonts/font.otf")) {
-        std::cerr << "Error loading font in PauseMenu" << std::endl;
-        return;
+    sf::Font* font = FontManager::getInstance().getFont("assets/fonts/font.otf");
+    if (!font) {
+        throw std::runtime_error("Failed to load font");
     }
-    text.setFont(font);
+    text.setFont(*font);
     text.setString("Pause\nAppuyez sur Échap pour reprendre");
     text.setCharacterSize(40);
     text.setPosition(200, 200);
