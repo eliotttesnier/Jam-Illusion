@@ -48,9 +48,10 @@ Game::Game()
 
     // Menus
     _currentScene = GameState::MAIN_MENU;
-    _currentMenu = &_mainMenu;
     _mainMenu = MainMenu();
+    _currentMenu = &_mainMenu;
 
+    _pauseMenu = PauseMenu();
     // Interactions HUD
     _canInteract = false;
     _interactFont.loadFromFile("assets/fonts/font.otf");
@@ -130,7 +131,6 @@ void Game::update()
         }
         _mainMenu.update();
         _view.setSize(sf::Vector2f(1920, 1080));
-        _view.setCenter(960, 540);
         _window.setView(_view);
         return;
     } else {
@@ -186,7 +186,7 @@ void Game::draw()
 {
     _window.clear();
     if (_currentScene == GameState::MAIN_MENU) {
-        _rooms[_currentRoom]->draw(_window);
+        _mainMenu.draw(_window);
         _window.display();
         return;
     } else if (_currentScene == GameState::PAUSE) {

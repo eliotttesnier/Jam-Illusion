@@ -8,18 +8,20 @@
 #pragma once
 
 #include "IMenu.hpp"
-#include <vector>
+#include <SFML/Graphics.hpp>
 
 class MainMenu : public IMenu {
-private:
-    sf::Font font;
-    sf::Text title;
-    std::vector<sf::Text> options;
-    size_t selectedIndex;
-
 public:
     MainMenu();
+    ~MainMenu();
+
+    // Implémentation des méthodes de l'interface IMenu
     void handleEvent(sf::Event& event) override;
-    void update() override {}
+    void update() override;
     void draw(sf::RenderWindow& window) override;
+
+private:
+    sf::Text _title;
+    sf::Text _playButton;
+    sf::Font _font;
 };
