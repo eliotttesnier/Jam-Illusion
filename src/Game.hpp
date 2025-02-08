@@ -11,6 +11,7 @@
 #include "Room.hpp"
 #include "Object.hpp"
 #include "MainMenu.hpp"
+#include "pnj.hpp"
 
 class Game {
     public:
@@ -48,4 +49,7 @@ class Game {
 
         // Menus
         MainMenu _mainMenu;
+
+        //PNJ
+        std::vector<PNJ> _pnjs;
 };

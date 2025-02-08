@@ -20,6 +20,8 @@ SRC =   src/main.cpp					\
 		src/Room.cpp					\
 		src/MainMenu.cpp				\
 		src/Object.cpp					\
+		src/dialogueLoader.cpp			\
+		src/pnj.cpp						\
 
 OBJ = $(SRC:.cpp=.o)
 
