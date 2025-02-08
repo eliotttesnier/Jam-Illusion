@@ -37,9 +37,11 @@ class Game
         int getCurrentRoom() const;
         std::vector<IRoom *> getRooms() const;
         sf::Music::Status getNarrationStatus() const;
+        bool getScreaming() const;
 
         // Setters
         void setCurrentRoom(int currentRoom);
+        void setScreaming(bool screaming);
 
     protected:
     private:
@@ -69,4 +71,5 @@ class Game
         bool _canInteract;
         sf::Text _interactText;
         sf::Font _interactFont;
+        bool _screaming;
 };

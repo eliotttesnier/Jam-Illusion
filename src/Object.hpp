@@ -8,13 +8,13 @@
 #pragma once
 
 #include <SFML/Graphics.hpp>
+#include <SFML/Audio.hpp>
 
 class Object {
     public:
         enum Type {
             DOOR,
-            NPC,
-            ITEM
+            LIBRARY,
         };
 
         Object(sf::FloatRect triggerBox, std::string name, Type type = Type::DOOR, ...);
@@ -33,6 +33,9 @@ class Object {
 
         void unlock();
 
+        void scream();
+        bool isScreaming() const;
+
     protected:
     private:
         sf::FloatRect _triggerBox;
@@ -42,6 +45,11 @@ class Object {
         // Doors
         int _redirectTo;
         bool _isLocked;
+
+        // Library
+        sf::Texture _screamerTexture;
+        sf::Sprite _screamerSprite;
+        sf::Music _screamerSound;
 
         // Animation
         sf::Sprite _sprite;

@@ -23,6 +23,7 @@ Game::Game()
     _view.setCenter(_player.getCenter());
     _view.setSize(sf::Vector2f(1920, 1080));
     _view.zoom(0.25f);
+    _screaming = false;
     // _music.play(Music::MENU);
 
     // Rooms
@@ -202,8 +203,10 @@ void Game::draw()
     } else {
         _rooms[_currentRoom]->draw(_window);
         _player.draw(_window);
-        _interactText.setFont(_interactFont);
-        _window.draw(_interactText);
+        if (!_screaming) {
+            _interactText.setFont(_interactFont);
+            _window.draw(_interactText);
+        }
         _window.display();
     }
 }
@@ -230,4 +233,14 @@ std::vector<IRoom *> Game::getRooms() const
 sf::Music::Status Game::getNarrationStatus() const
 {
     return _narrations[_currentRoom].get()->getStatus();
+}
+
+bool Game::getScreaming() const
+{
+    return _screaming;
+}
+
+void Game::setScreaming(bool screaming)
+{
+    _screaming = screaming;
 }
