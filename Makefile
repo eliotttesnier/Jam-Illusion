@@ -19,6 +19,7 @@ SRC =   src/main.cpp					\
 		src/Player.cpp					\
 		src/Room.cpp					\
 		src/MainMenu.cpp				\
+		src/PauseMenu.cpp				\
 		src/Object.cpp					\
 
 OBJ = $(SRC:.cpp=.o)

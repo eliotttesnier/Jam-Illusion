@@ -10,7 +10,7 @@
 
 Button::Button(const std::string &label, sf::Vector2f position, sf::Vector2f size, std::function<void()> action)
 {
-    font.loadFromFile("arial.ttf");
+    font.loadFromFile("assets/fonts/font.otf");
 
     shape.setSize(size);
     shape.setPosition(position);

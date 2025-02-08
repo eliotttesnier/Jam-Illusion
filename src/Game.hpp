@@ -11,26 +11,28 @@
 #include "Room.hpp"
 #include "Object.hpp"
 #include "MainMenu.hpp"
+#include "PauseMenu.hpp"
+#include <SFML/Graphics.hpp>
 
-class Game {
+enum class GameState { MAIN_MENU, GAME, PAUSE };
+
+class Game
+{
     public:
-        enum SCENE {
-            MAIN_MENU,
-            GAME
-        };
-
         Game();
         ~Game();
 
         // Methods
         void run();
+        void processEvents();
         void update();
         void draw();
 
     protected:
     private:
         // Scene logic
-        SCENE _currentScene;
+        GameState _currentScene;
+        IMenu* _currentMenu;
 
         Player _player;
 
@@ -48,4 +50,5 @@ class Game {
 
         // Menus
         MainMenu _mainMenu;
+        PauseMenu _pauseMenu;
 };
