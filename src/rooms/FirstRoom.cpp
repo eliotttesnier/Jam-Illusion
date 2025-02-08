@@ -13,7 +13,7 @@ FirstRoom::FirstRoom() : Room()
     _sprite.setTexture(_texture);
     _collisions.loadFromFile("assets/collision/room1_collision.png");
     _spawnPoint = sf::Vector2f(137, 28);
-    _objects.push_back(Object(sf::FloatRect(133, 31, 21, 10), "Door"));
+    _objects.push_back(Object(sf::FloatRect(133, 31, 21, 10), "Door", Object::Type::DOOR, 2));
 }
 
 FirstRoom::~FirstRoom()

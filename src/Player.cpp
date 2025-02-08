@@ -78,10 +78,12 @@ void Player::handleInput(std::vector<Object> objects)
     if ((sf::Keyboard::isKeyPressed(sf::Keyboard::E) || sf::Joystick::isButtonPressed(0, 0)) && interactionClock.getElapsedTime().asSeconds() > 0.5f) {
         for (const auto &object : objects) {
             if (object.isColliding(_sprite.getGlobalBounds())) {
-                _game->setCurrentRoom(_game->getCurrentRoom() + 1);
-                _position = _game->getRooms()[_game->getCurrentRoom()]->getSpawnPoint();
-                interactionClock.restart();
-                break;
+                if (object.getType() == Object::Type::DOOR) {
+                    _game->setCurrentRoom(object.getRedirectTo());
+                    _position = _game->getRooms()[_game->getCurrentRoom()]->getSpawnPoint();
+                    interactionClock.restart();
+                    break;
+                }
             }
         }
     }
