@@ -65,7 +65,7 @@ sf::Vector2u Room::getMapSize() const
 bool Room::isValidDialogPosition(const sf::Vector2f& position) const
 {
     sf::FloatRect pnjBounds(position.x, position.y, 15, 23); // Taille du PNJ
-    sf::FloatRect interactionArea(position.x - 25, position.y - 25, 65, 73); // Zone élargie pour l'interaction
+    sf::FloatRect interactionArea(position.x - 10, position.y - 10, 35, 43); // Zone élargie pour l'interaction
 
     // Vérifie les collisions aux quatre coins de la zone d'interaction
     std::vector<sf::Vector2i> points = {
