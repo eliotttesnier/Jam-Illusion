@@ -14,8 +14,12 @@ sf::Clock PNJ::_interactionClock;
 PNJ::PNJ(const sf::Vector2f& position, const std::string& dialogueFile)
 {
     pos = position;
-    _texture.loadFromFile("assets/player/idle/1.png");
-    _sprite.setTexture(_texture);
+    for (int i = 1; i < 7; i++) {
+        sf::Texture texture;
+        texture.loadFromFile("assets/player/idle/" + std::to_string(i) + ".png");
+        _textures.push_back(texture);
+    }
+    _sprite.setTexture(_textures[0]);
     _sprite.setPosition(position);
 
     _triggerBox = sf::FloatRect(position.x, position.y, _sprite.getGlobalBounds().width, _sprite.getGlobalBounds().height);
@@ -38,6 +42,8 @@ PNJ::PNJ(const sf::Vector2f& position, const std::string& dialogueFile)
     _dialogueText.setPosition(position.x - (_dialogueText.getGlobalBounds().width / 2), position.y - _dialogueText.getGlobalBounds().height - 10);
     _talking = false;
     _talkingTimer.restart();
+    _currentFrame = 0;
+    _animationClock.restart();
 }
 
 PNJ::~PNJ()
@@ -63,7 +69,11 @@ void PNJ::draw(sf::RenderWindow& window)
     if (_talking && _talkingTimer.getElapsedTime().asSeconds() > 2) {
         _talking = false;
     }
-    _sprite.setTexture(_texture);
+    if (_animationClock.getElapsedTime().asSeconds() > 0.1f) {
+        _currentFrame = (_currentFrame + 1) % 6;
+        _animationClock.restart();
+    }
+    _sprite.setTexture(_textures[_currentFrame]);
     window.draw(_sprite);
     if (_talking) {
         if (!_dialogues.empty()) {
@@ -96,4 +106,3 @@ void PNJ::nextDialogue()
     _dialogueIndex = (_dialogueIndex + 1) % _dialogues.size();
     _dialogueText.setString(_dialogues[_dialogueIndex]);
 }
-
