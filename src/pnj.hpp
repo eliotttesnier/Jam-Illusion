@@ -31,7 +31,6 @@ class PNJ {
 
     private:
         sf::Sprite _sprite;
-        sf::Texture _texture;
         sf::FloatRect _triggerBox;
         sf::Vector2f pos;
         bool _talking;
@@ -42,4 +41,9 @@ class PNJ {
         sf::Font _font;
         sf::Text _dialogueText;
         sf::Clock _talkingTimer;
+
+        // Animation
+        std::vector<sf::Texture> _textures;
+        int _currentFrame;
+        sf::Clock _animationClock;
 };
