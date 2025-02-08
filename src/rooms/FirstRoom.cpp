@@ -14,7 +14,8 @@ FirstRoom::FirstRoom() : Room()
     _collisions.loadFromFile("assets/collision/room1_collision.png");
     _spawnPoint = sf::Vector2f(137, 28);
     _objects.push_back(Object(sf::FloatRect(133, 31, 21, 10), "Door", Object::Type::DOOR, 2));
-    _pnjs.push_back(new PNJ(sf::Vector2f(50, 50), "dialogues/room0.txt"));
+    sf::Vector2f randomPos = generateRandomPosition();
+    _pnjs.push_back(new PNJ(randomPos, "dialogues/room0.txt"));
 }
 
 FirstRoom::~FirstRoom()

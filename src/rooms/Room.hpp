@@ -20,6 +20,7 @@ class Room : public IRoom {
         std::vector<Object> getObjects() const;
         sf::Vector2f getSpawnPoint() const;
         std::vector<PNJ *> getPNJs() const;
+        sf::Vector2u getMapSize() const;
 
     protected:
         sf::Sprite _sprite;
@@ -28,4 +29,6 @@ class Room : public IRoom {
         std::vector<Object> _objects;
         std::vector<PNJ *> _pnjs;
         sf::Vector2f _spawnPoint;
+        sf::Vector2f generateRandomPosition() const;
+        bool isValidDialogPosition(const sf::Vector2f& position) const;
 };
