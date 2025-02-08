@@ -43,3 +43,6 @@ test_output/
 coverage/
 *.gcda
 *.gcno
+
+# Binaires et exécutables
+Game

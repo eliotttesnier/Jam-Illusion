@@ -21,6 +21,8 @@ Game::Game()
     // Rooms
     _currentRoom = 0;
     _rooms.push_back(Room(1));
+    _objects[0] = std::vector<Object>();
+    _objects[0].push_back(Object(sf::FloatRect(133, 31, 154, 41), "Door"));
 
     // Menus
     _currentScene = SCENE::GAME;
@@ -57,7 +59,7 @@ void Game::update()
         _window.setView(_view);
         return;
     }
-    _player.update(_deltaTime, _rooms[_currentRoom].getCollisions());
+    _player.update(_deltaTime, _rooms[_currentRoom].getCollisions(), _objects[_currentRoom]);
     _view.setCenter(_player.getCenter());
     _window.setView(_view);
 }

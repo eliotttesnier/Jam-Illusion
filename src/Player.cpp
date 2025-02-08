@@ -39,35 +39,46 @@ Player::~Player()
 }
 
 // Methods
-void Player::update(float deltaTime, const sf::Image &collisions)
+void Player::update(float deltaTime, const sf::Image &collisions, std::vector<Object> objects)
 {
-    handleInput();
+    handleInput(objects);
     move(deltaTime);
     CheckCollisions(collisions, deltaTime);
     animate(deltaTime);
 }
 
-void Player::handleInput()
+void Player::handleInput(std::vector<Object> objects)
 {
+    float joystickX = sf::Joystick::getAxisPosition(0, sf::Joystick::X);
+    float joystickY = sf::Joystick::getAxisPosition(0, sf::Joystick::Y);
     _direction = sf::Vector2f(0.0f, 0.0f);
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Z)) {
+
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Z) || joystickY < -50) {
         _direction.y -= 1.0f;
         _currentDirection = Direction::UP;
     }
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::S) || joystickY > 50) {
         _direction.y += 1.0f;
         _currentDirection = Direction::DOWN;
     }
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Q)) {
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Q) || joystickX < -50) {
         _direction.x -= 1.0f;
         _currentDirection = Direction::LEFT;
     }
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::D) || joystickX > 50) {
         _direction.x += 1.0f;
         _currentDirection = Direction::RIGHT;
     }
     if (_direction.x == 0 && _direction.y == 0) {
         _currentDirection = Direction::IDLE;
+    }
+
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::E) || sf::Joystick::isButtonPressed(0, 0)) { // "a" button is usually button 0
+        for (const auto &object : objects) {
+            if (object.isColliding(_sprite.getGlobalBounds())) {
+                std::cout << "Colliding with " << object.getName() << std::endl;
+            }
+        }
     }
 }
 

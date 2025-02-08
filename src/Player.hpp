@@ -7,6 +7,7 @@
 
 #pragma once
 
+#include "Object.hpp"
 #include <SFML/Graphics.hpp>
 #include <iostream>
 #include <vector>
@@ -27,8 +28,8 @@ class Player {
         ~Player();
 
         // Methods
-        void update(float deltaTime, const sf::Image &collisions);
-        void handleInput();
+        void update(float deltaTime, const sf::Image &collisions, std::vector<Object> objects);
+        void handleInput(std::vector<Object> objects);
         void move(float deltaTime);
         void CheckCollisions(const sf::Image &collisions, float deltaTime);
         void animate(float deltaTime);
