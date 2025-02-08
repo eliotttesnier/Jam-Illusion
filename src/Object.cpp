@@ -22,7 +22,15 @@ Object::Object(sf::FloatRect triggerBox, std::string name, Type type, ...)
         va_list args;
         va_start(args, type);
         _redirectTo = va_arg(args, int);
+        _isLocked = va_arg(args, int);
         va_end(args);
+    }
+
+    if (type == Type::LIBRARY) {
+        _screamerTexture.loadFromFile("assets/images/screamer.png");
+        _screamerSprite.setTexture(_screamerTexture);
+        _screamerSprite.setScale(sf::Vector2f(0.5, 0.5));
+        _screamerSound.openFromFile("assets/music/screamer.wav");
     }
 
     for (int i = 0; i <= 4; ++i) {
@@ -75,6 +83,17 @@ void Object::draw(sf::RenderWindow &window)
 {
     _sprite.setTexture(_textures[_currentFrame]);
     window.draw(_sprite);
+
+    if (_type == Type::LIBRARY && isScreaming()) {
+        sf::View view = window.getView();
+
+        _screamerSprite.setScale(
+            view.getSize().x / _screamerSprite.getLocalBounds().width,
+            view.getSize().y / _screamerSprite.getLocalBounds().height
+        );
+        _screamerSprite.setPosition(view.getCenter().x - view.getSize().x / 2, view.getCenter().y - view.getSize().y / 2);
+        window.draw(_screamerSprite);
+    }
 }
 
 std::string Object::getName() const
@@ -90,4 +109,26 @@ int Object::getRedirectTo() const
 Object::Type Object::getType() const
 {
     return _type;
+}
+
+bool Object::isLocked() const
+{
+    return _isLocked;
+}
+
+void Object::unlock()
+{
+    _isLocked = false;
+}
+
+void Object::scream()
+{
+    _screamerSound.setVolume(100);
+    _screamerSound.stop();
+    _screamerSound.play();
+}
+
+bool Object::isScreaming() const
+{
+    return _screamerSound.getStatus() == sf::Music::Playing;
 }

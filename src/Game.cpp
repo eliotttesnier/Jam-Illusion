@@ -23,7 +23,8 @@ Game::Game()
     _view.setCenter(_player.getCenter());
     _view.setSize(sf::Vector2f(1920, 1080));
     _view.zoom(0.25f);
-    _music.play(Music::MENU);
+    _screaming = false;
+    // _music.play(Music::MENU);
 
     // Rooms
     _currentRoom = 0;
@@ -124,8 +125,8 @@ void Game::update()
 {
     if (_currentScene == GameState::MAIN_MENU) {
         if (!_music.isPlaying() || _music.getCurrentTrack() != Music::MENU) {
-            _music.stop();
-            _music.play(Music::MENU);
+            // _music.stop();
+            // _music.play(Music::MENU);
         }
         _mainMenu.update();
         _view.setSize(sf::Vector2f(1920, 1080));
@@ -134,8 +135,8 @@ void Game::update()
         return;
     } else {
         if (!_music.isPlaying() || _music.getCurrentTrack() != Music::GAME) {
-            _music.stop();
-            _music.play(Music::GAME);
+            // _music.stop();
+            // _music.play(Music::GAME);
         }
         _view.setSize(sf::Vector2f(1920, 1080));
         _view.zoom(0.25f);
@@ -145,10 +146,16 @@ void Game::update()
     _view.setCenter(_player.getCenter());
     _window.setView(_view);
 
+    // Interactions HUD
+    bool blocked = false;
     _canInteract = false;
     for (auto &Object : _rooms[_currentRoom]->getObjects()) {
-        if (Object.isColliding(_player.getSprite().getGlobalBounds()))
+        if (Object->isColliding(_player.getSprite().getGlobalBounds())) {
             _canInteract = true;
+            if (Object->getType() == Object::Type::DOOR && Object->isLocked()) {
+                blocked = true;
+            }
+        }
     }
     for (auto &pnj : _rooms[_currentRoom]->getPNJs()) {
         if (pnj->isColliding(_player.getSprite().getGlobalBounds()))
@@ -156,6 +163,8 @@ void Game::update()
     }
     if (_narrations[_currentRoom].get()->getStatus() == sf::Music::Playing)
         _interactText.setString("Vous ne pouvez pas interagir pendant que vous entendez des voix...");
+    else if (blocked)
+        _interactText.setString("La porte est fermee...");
     else
         _interactText.setString("Appuyez sur E (Clavier) ou B (Manette) pour interagir...");
     _interactText.setPosition(_view.getCenter().x - _view.getSize().x / 2 + 2, _view.getCenter().y - _view.getSize().y / 2 - 2);
@@ -193,8 +202,10 @@ void Game::draw()
     } else {
         _rooms[_currentRoom]->draw(_window);
         _player.draw(_window);
-        _interactText.setFont(_interactFont);
-        _window.draw(_interactText);
+        if (!_screaming) {
+            _interactText.setFont(_interactFont);
+            _window.draw(_interactText);
+        }
         _window.display();
     }
 }
@@ -226,4 +237,13 @@ sf::Music::Status Game::getNarrationStatus() const
 void Game::setScene(GameState scene)
 {
     _currentScene = GameState::GAME;
+
+bool Game::getScreaming() const
+{
+    return _screaming;
+}
+
+void Game::setScreaming(bool screaming)
+{
+    _screaming = screaming;
 }

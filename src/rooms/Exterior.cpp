@@ -6,6 +6,7 @@
 */
 
 #include "Exterior.hpp"
+#include <iostream>
 
 Exterior::Exterior(int nextRoom) : Room()
 {
@@ -13,7 +14,7 @@ Exterior::Exterior(int nextRoom) : Room()
     _sprite.setTexture(_texture);
     _collisions.loadFromFile("assets/collision/room0_collision.png");
     _spawnPoint = sf::Vector2f(137, 180);
-    _objects.push_back(Object(sf::FloatRect(133, 31, 21, 10), "Door", Object::Type::DOOR, nextRoom));
+    _objects.push_back(new Object(sf::FloatRect(133, 31, 21, 10), "Door", Object::Type::DOOR, nextRoom, false));
 }
 
 Exterior::~Exterior()

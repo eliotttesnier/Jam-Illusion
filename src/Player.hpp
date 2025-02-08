@@ -31,7 +31,7 @@ class Player {
 
         // Methods
         void update(float deltaTime, IRoom &room);
-        void handleInput(std::vector<Object> objects);
+        void handleInput(std::vector<Object *> objects);
         void move(float deltaTime);
         void CheckCollisions(const sf::Image &collisions, float deltaTime);
         void animate(float deltaTime);

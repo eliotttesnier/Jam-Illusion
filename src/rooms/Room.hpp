@@ -17,7 +17,7 @@ class Room : public IRoom {
         void draw(sf::RenderWindow &window);
 
         sf::Image getCollisions() const;
-        std::vector<Object> getObjects() const;
+        std::vector<Object *> getObjects() const;
         sf::Vector2f getSpawnPoint() const;
         std::vector<PNJ *> getPNJs() const;
         sf::Vector2u getMapSize() const;
@@ -26,7 +26,7 @@ class Room : public IRoom {
         sf::Sprite _sprite;
         sf::Texture _texture;
         sf::Image _collisions;
-        std::vector<Object> _objects;
+        std::vector<Object *> _objects;
         std::vector<PNJ *> _pnjs;
         sf::Vector2f _spawnPoint;
         sf::Vector2f generateRandomPosition() const;
