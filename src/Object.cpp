@@ -22,6 +22,7 @@ Object::Object(sf::FloatRect triggerBox, std::string name, Type type, ...)
         va_list args;
         va_start(args, type);
         _redirectTo = va_arg(args, int);
+        _isLocked = va_arg(args, int);
         va_end(args);
     }
 
@@ -90,4 +91,14 @@ int Object::getRedirectTo() const
 Object::Type Object::getType() const
 {
     return _type;
+}
+
+bool Object::isLocked() const
+{
+    return _isLocked;
+}
+
+void Object::unlock()
+{
+    _isLocked = false;
 }

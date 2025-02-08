@@ -48,7 +48,7 @@ void Player::update(float deltaTime, IRoom &room)
     animate(deltaTime);
 }
 
-void Player::handleInput(std::vector<Object> objects)
+void Player::handleInput(std::vector<Object *> objects)
 {
     static sf::Clock interactionClock;
     float joystickX = sf::Joystick::getAxisPosition(0, sf::Joystick::X);
@@ -77,11 +77,13 @@ void Player::handleInput(std::vector<Object> objects)
 
     if ((sf::Keyboard::isKeyPressed(sf::Keyboard::E) || sf::Joystick::isButtonPressed(0, 0)) && interactionClock.getElapsedTime().asSeconds() > 0.5f) {
         for (const auto &object : objects) {
-            if (object.isColliding(_sprite.getGlobalBounds())) {
-                if (object.getType() == Object::Type::DOOR) {
+            if (object->isColliding(_sprite.getGlobalBounds())) {
+                if (object->getType() == Object::Type::DOOR) {
                     if (_game->getNarrationStatus() == sf::Music::Playing)
                         break;
-                    _game->setCurrentRoom(object.getRedirectTo());
+                    if (object->isLocked())
+                        break;
+                    _game->setCurrentRoom(object->getRedirectTo());
                     interactionClock.restart();
                     break;
                 }
@@ -91,6 +93,10 @@ void Player::handleInput(std::vector<Object> objects)
             if (pnj->isColliding(_sprite.getGlobalBounds())) {
                 if (_game->getNarrationStatus() == sf::Music::Playing)
                         break;
+                // Events
+                if (_game->getCurrentRoom() == 1)
+                    _game->getRooms()[1]->getObjects()[0]->unlock();
+
                 pnj->set_talking();
                 pnj->nextDialogue();
                 interactionClock.restart();

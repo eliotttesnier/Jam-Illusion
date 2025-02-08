@@ -14,6 +14,12 @@ Room::Room()
 
 Room::~Room()
 {
+    for (auto &pnj : _pnjs) {
+        delete pnj;
+    }
+    for (auto &object : _objects) {
+        delete object;
+    }
 }
 
 // Methods
@@ -22,8 +28,8 @@ void Room::draw(sf::RenderWindow &window)
     _sprite.setTexture(_texture);
     window.draw(_sprite);
     for(auto &object: _objects) {
-        object.update();
-        object.draw(window);
+        object->update();
+        object->draw(window);
     }
     for (auto &pnj : _pnjs) {
         pnj->draw(window);
@@ -36,7 +42,7 @@ sf::Image Room::getCollisions() const
     return _collisions;
 }
 
-std::vector<Object> Room::getObjects() const
+std::vector<Object *> Room::getObjects() const
 {
     return _objects;
 }

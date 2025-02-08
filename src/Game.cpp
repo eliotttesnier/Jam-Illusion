@@ -23,7 +23,7 @@ Game::Game()
     _view.setCenter(_player.getCenter());
     _view.setSize(sf::Vector2f(1920, 1080));
     _view.zoom(0.25f);
-    _music.play(Music::MENU);
+    // _music.play(Music::MENU);
 
     // Rooms
     _currentRoom = 0;
@@ -61,7 +61,7 @@ Game::Game()
     _interactText.setString("Appuyez sur E (Clavier) ou B (Manette) pour interagir...");
 
     _player.setGame(this);
-    setCurrentRoom(0);
+    setCurrentRoom(1);
 }
 
 Game::~Game()
@@ -125,8 +125,8 @@ void Game::update()
 {
     if (_currentScene == GameState::MAIN_MENU) {
         if (!_music.isPlaying() || _music.getCurrentTrack() != Music::MENU) {
-            _music.stop();
-            _music.play(Music::MENU);
+            // _music.stop();
+            // _music.play(Music::MENU);
         }
         _mainMenu.update();
         _view.setSize(sf::Vector2f(1920, 1080));
@@ -135,8 +135,8 @@ void Game::update()
         return;
     } else {
         if (!_music.isPlaying() || _music.getCurrentTrack() != Music::GAME) {
-            _music.stop();
-            _music.play(Music::GAME);
+            // _music.stop();
+            // _music.play(Music::GAME);
         }
         _view.setSize(sf::Vector2f(1920, 1080));
         _view.zoom(0.25f);
@@ -149,7 +149,7 @@ void Game::update()
     // Interactions HUD
     _canInteract = false;
     for (auto &Object : _rooms[_currentRoom]->getObjects()) {
-        if (Object.isColliding(_player.getSprite().getGlobalBounds()))
+        if (Object->isColliding(_player.getSprite().getGlobalBounds()))
             _canInteract = true;
     }
     for (auto &pnj : _rooms[_currentRoom]->getPNJs()) {
