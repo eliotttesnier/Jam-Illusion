@@ -23,6 +23,9 @@ SRC =   src/main.cpp					\
 		src/rooms/Exterior.cpp			\
 		src/rooms/FirstRoom.cpp			\
 		src/rooms/SecondRoom.cpp		\
+		src/rooms/ThirdRoom.cpp			\
+		src/rooms/FourthRoom.cpp		\
+		src/rooms/Final.cpp			\
 
 OBJ = $(SRC:.cpp=.o)
 

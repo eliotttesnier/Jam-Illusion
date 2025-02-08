@@ -9,6 +9,9 @@
 #include "Exterior.hpp"
 #include "FirstRoom.hpp"
 #include "SecondRoom.hpp"
+#include "ThirdRoom.hpp"
+#include "FourthRoom.hpp"
+#include "Final.hpp"
 
 Game::Game()
 {
@@ -26,6 +29,9 @@ Game::Game()
     _rooms.push_back(new Exterior());
     _rooms.push_back(new FirstRoom());
     _rooms.push_back(new SecondRoom());
+    _rooms.push_back(new ThirdRoom());
+    _rooms.push_back(new FourthRoom());
+    _rooms.push_back(new Final());
 
     // Menus
     _currentScene = SCENE::GAME;
@@ -128,6 +134,7 @@ int Game::getCurrentRoom() const
 void Game::setCurrentRoom(int currentRoom)
 {
     _currentRoom = currentRoom;
+    _canInteract = false;
 }
 
 std::vector<IRoom *> Game::getRooms() const
