@@ -35,6 +35,7 @@ void Music::play(Type type)
 
     _currentTrack = type;
     _music.setLoop(true);
+    _music.setVolume(25);
     _music.play();
 }
 
