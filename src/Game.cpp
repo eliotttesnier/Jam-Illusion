@@ -23,6 +23,7 @@ Game::Game()
     _view.setCenter(_player.getCenter());
     _view.setSize(sf::Vector2f(1920, 1080));
     _view.zoom(0.25f);
+    _music.play(Music::MENU);
 
     // Rooms
     _currentRoom = 0;
@@ -77,6 +78,7 @@ void Game::processEvents() {
             _window.close();
 
         if (_currentScene == GameState::MAIN_MENU) {
+            _music.play(Music::MENU);
             if (getNarrationStatus() == sf::Music::Playing)
                 _narrations[_currentRoom].get()->pause();
             _mainMenu.handleEvent(event);
@@ -87,6 +89,7 @@ void Game::processEvents() {
             }
         }
         else if (_currentScene == GameState::GAME) {
+            _music.play(Music::GAME);
             if (getNarrationStatus() == sf::Music::Paused)
                 _narrations[_currentRoom].get()->play();
             if ((event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Escape)
