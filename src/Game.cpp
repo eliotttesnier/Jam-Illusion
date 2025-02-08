@@ -237,6 +237,7 @@ sf::Music::Status Game::getNarrationStatus() const
 void Game::setScene(GameState scene)
 {
     _currentScene = GameState::GAME;
+}
 
 bool Game::getScreaming() const
 {
