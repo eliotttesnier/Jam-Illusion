@@ -14,6 +14,11 @@ SecondRoom::SecondRoom(int nextRoom)
     _collisions.loadFromFile("assets/collision/room2_collision.png");
     _spawnPoint = sf::Vector2f(40, 25);
     _objects.push_back(new Object(sf::FloatRect(37, 31, 21, 10), "Door", Object::Type::DOOR, nextRoom, false));
+    sf::Vector2f randomPos = generateRandomPosition();
+    if (nextRoom == 3)
+        _pnjs.push_back(new PNJ(randomPos, "dialogues/room03.txt"));
+    else if (nextRoom == 6)
+        _pnjs.push_back(new PNJ(randomPos, "dialogues/room06.txt"));
 }
 
 SecondRoom::~SecondRoom()
