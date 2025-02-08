@@ -9,6 +9,7 @@
 
 #include "Player.hpp"
 #include "Room.hpp"
+#include "Object.hpp"
 #include "MainMenu.hpp"
 
 class Game {
@@ -43,6 +44,7 @@ class Game {
         // Rooms
         int _currentRoom;
         std::vector<Room> _rooms;
+        std::map<int, std::vector<Object>> _objects;
 
         // Menus
         MainMenu _mainMenu;

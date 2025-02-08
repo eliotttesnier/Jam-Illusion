@@ -39,15 +39,15 @@ Player::~Player()
 }
 
 // Methods
-void Player::update(float deltaTime, const sf::Image &collisions)
+void Player::update(float deltaTime, const sf::Image &collisions, std::vector<Object> objects)
 {
-    handleInput();
+    handleInput(objects);
     move(deltaTime);
     CheckCollisions(collisions, deltaTime);
     animate(deltaTime);
 }
 
-void Player::handleInput()
+void Player::handleInput(std::vector<Object> objects)
 {
     _direction = sf::Vector2f(0.0f, 0.0f);
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Z)) {
@@ -68,6 +68,14 @@ void Player::handleInput()
     }
     if (_direction.x == 0 && _direction.y == 0) {
         _currentDirection = Direction::IDLE;
+    }
+
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::E)) {
+        for (const auto &object : objects) {
+            if (object.isColliding(_sprite.getGlobalBounds())) {
+                std::cout << "Colliding with " << object.getName() << std::endl;
+            }
+        }
     }
 }
 
