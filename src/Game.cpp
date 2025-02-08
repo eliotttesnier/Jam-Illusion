@@ -52,7 +52,10 @@ Game::Game()
 
     // Interactions HUD
     _canInteract = false;
-    _interactFont.loadFromFile("assets/fonts/font.otf");
+    if (!_interactFont.loadFromFile("assets/fonts/font.otf")) {
+        std::cerr << "Error loading font in Game" << std::endl;
+        return;
+    }
     _interactText.setFont(_interactFont);
     _interactText.setCharacterSize(50);
     _interactText.setScale(0.25, 0.25);

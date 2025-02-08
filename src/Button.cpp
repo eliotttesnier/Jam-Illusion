@@ -10,7 +10,10 @@
 
 Button::Button(const std::string &label, sf::Vector2f position, sf::Vector2f size, std::function<void()> action)
 {
-    font.loadFromFile("assets/fonts/font.otf");
+    if (!font.loadFromFile("assets/fonts/font.otf")) {
+        std::cerr << "Error loading font in Button" << std::endl;
+        return;
+    }
 
     shape.setSize(size);
     shape.setPosition(position);

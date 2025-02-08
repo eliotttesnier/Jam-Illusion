@@ -31,9 +31,12 @@ PNJ::PNJ(const sf::Vector2f& position, const std::string& dialogueFile)
         _dialogues.push_back("...");
     }
 
-    if (_font.loadFromFile("assets/fonts/font.otf")) {
-        _dialogueText.setFont(_font);
+    if (!_font.loadFromFile("assets/fonts/font.otf")) {
+        std::cerr << "Error loading font in PNJ" << std::endl;
+        // Set a fallback or throw an exception if font is critical
+        return;
     }
+    _dialogueText.setFont(_font);
     _dialogueText.setCharacterSize(30);
     const sf::Vector2f scale{0.33f, 0.33f};
     _dialogueText.setScale(scale);

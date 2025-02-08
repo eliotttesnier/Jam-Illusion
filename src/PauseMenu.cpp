@@ -9,7 +9,10 @@
 #include <iostream>
 
 PauseMenu::PauseMenu() {
-    font.loadFromFile("assets/fonts/font.otf");
+    if (!font.loadFromFile("assets/fonts/font.otf")) {
+        std::cerr << "Error loading font in PauseMenu" << std::endl;
+        return;
+    }
     text.setFont(font);
     text.setString("Pause\nAppuyez sur Échap pour reprendre");
     text.setCharacterSize(40);
