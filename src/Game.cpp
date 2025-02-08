@@ -78,7 +78,6 @@ void Game::processEvents() {
             _window.close();
 
         if (_currentScene == GameState::MAIN_MENU) {
-            _music.play(Music::MENU);
             if (getNarrationStatus() == sf::Music::Playing)
                 _narrations[_currentRoom].get()->pause();
             _mainMenu.handleEvent(event);
@@ -89,7 +88,6 @@ void Game::processEvents() {
             }
         }
         else if (_currentScene == GameState::GAME) {
-            _music.play(Music::GAME);
             if (getNarrationStatus() == sf::Music::Paused)
                 _narrations[_currentRoom].get()->play();
             if ((event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Escape)
@@ -126,12 +124,20 @@ void Game::run()
 void Game::update()
 {
     if (_currentScene == GameState::MAIN_MENU) {
+        if (!_music.isPlaying() || _music.getCurrentTrack() != Music::MENU) {
+            _music.stop();
+            _music.play(Music::MENU);
+        }
         _mainMenu.update();
         _view.setSize(sf::Vector2f(1920, 1080));
         _view.setCenter(960, 540);
         _window.setView(_view);
         return;
     } else {
+        if (!_music.isPlaying() || _music.getCurrentTrack() != Music::GAME) {
+            _music.stop();
+            _music.play(Music::GAME);
+        }
         _view.setSize(sf::Vector2f(1920, 1080));
         _view.zoom(0.25f);
     }

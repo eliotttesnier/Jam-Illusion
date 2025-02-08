@@ -24,9 +24,11 @@ class Music {
         void stop();
         void setVolume(float volume);
         bool isPlaying() const;
+        Type getCurrentTrack() const;
 
     private:
         sf::Music _music;
+        Type _currentTrack;
         std::string _menuMusicPath;
         std::string _gameMusicPath;
 };
