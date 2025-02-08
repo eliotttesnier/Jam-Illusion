@@ -44,7 +44,7 @@ class Object {
 
         // Animation
         sf::Sprite _sprite;
-        sf::Texture _textures[4];
+        sf::Texture _textures[5];
         int _currentFrame;
         sf::Clock _animationClock;
         sf::Clock _pauseClock;

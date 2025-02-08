@@ -15,59 +15,107 @@
 
 Game::Game()
 {
+    // Initialize menus first
+    _mainMenu = MainMenu();
+    _pauseMenu = PauseMenu();
+    _currentMenu = &_mainMenu;
+    _currentScene = GameState::MAIN_MENU;
+
+    // Window and view setup
     _clock.restart();
     _deltaTime = 0.0f;
-    _window.create(sf::VideoMode(1920, 1080), "Jamy-llusion", sf::Style::Fullscreen | sf::Style::Titlebar);
+    _window.create(sf::VideoMode(1920, 1080), "Jamy-llusion", sf::Style::Titlebar);
     _window.setFramerateLimit(60);
-    _player = Player();
-    _view.setCenter(_player.getCenter());
     _view.setSize(sf::Vector2f(1920, 1080));
     _view.zoom(0.25f);
-    // _music.play(Music::MENU);
 
-    // Rooms
+    // Initialize rooms and narrations first
     _currentRoom = 0;
-    _rooms.push_back(new Exterior(1));
-    _rooms.push_back(new FirstRoom(2));
-    _rooms.push_back(new SecondRoom(3));
-    _rooms.push_back(new FirstRoom(4));
-    _rooms.push_back(new ThirdRoom(5));
-    _rooms.push_back(new SecondRoom(6));
-    _rooms.push_back(new FourthRoom(7));
-    _rooms.push_back(new FirstRoom(8));
-    _rooms.push_back(new FirstRoom(9));
-    _rooms.push_back(new FirstRoom(10));
-    _rooms.push_back(new FirstRoom(11));
-    _rooms.push_back(new Final());
-    for (int i = 1; i < (int)_rooms.size() + 1; i++) {
-        std::string path = "assets/sounds/wav/narration" + std::to_string(i) + ".wav";
-        auto music = std::make_unique<sf::Music>();
-        music->openFromFile(path);
-        _narrations.push_back(std::move(music));
-    }
+    initializeRooms();
+    loadNarrations();
 
-    // Menus
-    _currentScene = GameState::MAIN_MENU;
-    _currentMenu = &_mainMenu;
-    _mainMenu = MainMenu();
+    // Initialize player after rooms
+    _player = Player();
+    _view.setCenter(_player.getCenter());
+    _player.setGame(this);
+    setCurrentRoom(0);
 
-    // Interactions HUD
+    // Interactions HUD setup
     _canInteract = false;
-    _interactFont.loadFromFile("assets/fonts/font.otf");
+    if (!_interactFont.loadFromFile("assets/fonts/font.otf")) {
+        throw std::runtime_error("Failed to load interaction font");
+    }
     _interactText.setFont(_interactFont);
     _interactText.setCharacterSize(50);
     _interactText.setScale(0.25, 0.25);
     _interactText.setFillColor(sf::Color(255, 255, 255, 0));
     _interactText.setString("Appuyez sur E (Clavier) ou B (Manette) pour interagir...");
-
-    _player.setGame(this);
-    setCurrentRoom(0);
 }
 
 Game::~Game()
 {
-    for (auto &room : _rooms) {
+    // Clean up rooms
+    for (auto* room : _rooms) {
         delete room;
+    }
+    _rooms.clear();
+}
+
+void Game::initializeRooms() {
+    // Clear any existing rooms first
+    for (auto* room : _rooms) {
+        delete room;
+    }
+    _rooms.clear();
+
+    try {
+        std::vector<IRoom*> newRooms;
+
+        // Create rooms one by one with error handling
+        auto addRoom = [&newRooms](IRoom* room) {
+            if (!room) {
+                throw std::runtime_error("Failed to create room");
+            }
+            newRooms.push_back(room);
+        };
+
+        addRoom(new Exterior(1));
+        addRoom(new FirstRoom(2));
+        addRoom(new SecondRoom(3));
+        addRoom(new FirstRoom(4));
+        addRoom(new ThirdRoom(5));
+        addRoom(new SecondRoom(6));
+        addRoom(new FourthRoom(7));
+        addRoom(new FirstRoom(8));
+        addRoom(new FirstRoom(9));
+        addRoom(new FirstRoom(10));
+        addRoom(new FirstRoom(11));
+        addRoom(new Final());
+
+        // If all rooms were created successfully, assign to _rooms
+        _rooms = newRooms;
+        
+    } catch (const std::exception& e) {
+        std::cerr << "Failed to initialize rooms: " << e.what() << std::endl;
+        // Clean up any rooms that were created before the error
+        for (auto* room : _rooms) {
+            delete room;
+        }
+        _rooms.clear();
+        throw; // Re-throw to handle at higher level
+    }
+}
+
+void Game::loadNarrations()
+{
+    for (size_t i = 0; i < _rooms.size(); i++) {
+        std::string path = "assets/sounds/wav/narration" + std::to_string(i + 1) + ".wav";
+        auto music = std::make_unique<sf::Music>();
+        if (!music->openFromFile(path)) {
+            std::cerr << "Warning: Could not load narration " << path << std::endl;
+            continue;
+        }
+        _narrations.push_back(std::move(music));
     }
 }
 
@@ -208,11 +256,18 @@ int Game::getCurrentRoom() const
 
 void Game::setCurrentRoom(int currentRoom)
 {
+    if (currentRoom < 0 || currentRoom >= static_cast<int>(_rooms.size())) {
+        std::cerr << "Invalid room index: " << currentRoom << std::endl;
+        return;
+    }
     _currentRoom = currentRoom;
     _canInteract = false;
     _interactText.setFillColor(sf::Color(255, 255, 255, 0));
     _player.setPosition(_rooms[_currentRoom]->getSpawnPoint());
-    _narrations[_currentRoom].get()->play();
+    
+    if (_currentRoom < static_cast<int>(_narrations.size()) && _narrations[_currentRoom]) {
+        _narrations[_currentRoom]->play();
+    }
 }
 
 std::vector<IRoom *> Game::getRooms() const
@@ -222,5 +277,8 @@ std::vector<IRoom *> Game::getRooms() const
 
 sf::Music::Status Game::getNarrationStatus() const
 {
-    return _narrations[_currentRoom].get()->getStatus();
+    if (_currentRoom < static_cast<int>(_narrations.size()) && _narrations[_currentRoom]) {
+        return _narrations[_currentRoom]->getStatus();
+    }
+    return sf::Music::Stopped;
 }

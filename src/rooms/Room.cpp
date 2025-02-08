@@ -7,13 +7,22 @@
 
 #include "Room.hpp"
 #include <random>
+#include <filesystem>
+#include <iostream>
 
 Room::Room()
 {
+    // Initialize all member pointers to nullptr
+    _spawnPoint = sf::Vector2f(0, 0);
 }
 
 Room::~Room()
 {
+    // Clean up PNJs
+    for (auto* pnj : _pnjs) {
+        delete pnj;
+    }
+    _pnjs.clear();
 }
 
 // Methods
@@ -28,6 +37,40 @@ void Room::draw(sf::RenderWindow &window)
     for (auto &pnj : _pnjs) {
         pnj->draw(window);
     }
+}
+
+bool Room::loadTexture(const std::string& path) {
+    if (!_texture.loadFromFile(path)) {
+        std::cerr << "Failed to load texture: " << path << std::endl;
+        return false;
+    }
+    _sprite.setTexture(_texture);
+    return true;
+}
+
+bool Room::loadCollisionMap(const std::string& path) {
+    if (!_collisions.loadFromFile(path)) {
+        std::cerr << "Failed to load collision map: " << path << std::endl;
+        return false;
+    }
+    return true;
+}
+
+bool Room::validatePaths(const std::string& texturePath, const std::string& collisionPath) const {
+    std::filesystem::path texture(texturePath);
+    std::filesystem::path collision(collisionPath);
+    
+    if (!std::filesystem::exists(texture)) {
+        std::cerr << "Texture file does not exist: " << texturePath << std::endl;
+        return false;
+    }
+    
+    if (!std::filesystem::exists(collision)) {
+        std::cerr << "Collision map file does not exist: " << collisionPath << std::endl;
+        return false;
+    }
+    
+    return true;
 }
 
 // Getters

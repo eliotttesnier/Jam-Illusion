@@ -49,6 +49,10 @@ class Game
         Music _music;
         Player _player;
 
+        // Initialize methods
+        void initializeRooms();
+        void loadNarrations();
+
         // Graphics
         sf::RenderWindow _window;
         sf::View _view;

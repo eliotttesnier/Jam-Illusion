@@ -186,5 +186,7 @@ const sf::Sprite &Player::getSprite() const
 void Player::setGame(Game *game)
 {
     _game = game;
-    _position = _game->getRooms()[_game->getCurrentRoom()]->getSpawnPoint();
+    if (_game && !_game->getRooms().empty()) {
+        _position = _game->getRooms()[_game->getCurrentRoom()]->getSpawnPoint();
+    }
 }

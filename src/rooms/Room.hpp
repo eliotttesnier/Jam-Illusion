@@ -22,6 +22,9 @@ class Room : public IRoom {
         std::vector<PNJ *> getPNJs() const;
         sf::Vector2u getMapSize() const;
 
+        bool loadTexture(const std::string& path);
+        bool loadCollisionMap(const std::string& path);
+
     protected:
         sf::Sprite _sprite;
         sf::Texture _texture;
@@ -31,4 +34,6 @@ class Room : public IRoom {
         sf::Vector2f _spawnPoint;
         sf::Vector2f generateRandomPosition() const;
         bool isValidDialogPosition(const sf::Vector2f& position) const;
+        bool validatePaths(const std::string& texturePath, const std::string& collisionPath) const;
+
 };
