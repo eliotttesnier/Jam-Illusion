@@ -50,9 +50,7 @@ Game::Game()
     _currentScene = GameState::MAIN_MENU;
     _mainMenu = MainMenu();
     _currentMenu = &_mainMenu;
-
-    _pauseMenu = PauseMenu();
-    // Interactions HUD
+    _pauseMenu = PauseMenu();    // Interactions HUD
     _canInteract = false;
     _interactFont.loadFromFile("assets/fonts/font.otf");
     _interactText.setFont(_interactFont);
@@ -81,7 +79,7 @@ void Game::processEvents() {
         if (_currentScene == GameState::MAIN_MENU) {
             if (getNarrationStatus() == sf::Music::Playing)
                 _narrations[_currentRoom].get()->pause();
-            _mainMenu.handleEvent(event);
+            _mainMenu.handleEvent(event, _window, *this);
             if ((event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Enter)
                 || (event.type == sf::Event::JoystickButtonPressed && event.joystickButton.button == 0)) {
                 std::cout << "Démarrage du jeu..." << std::endl;
@@ -101,7 +99,7 @@ void Game::processEvents() {
         else if (_currentScene == GameState::PAUSE) {
             if (getNarrationStatus() == sf::Music::Playing)
                 _narrations[_currentRoom].get()->pause();
-            _pauseMenu.handleEvent(event);
+            _pauseMenu.handleEvent(event, _window, *this);
             if ((event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Escape)
                 || (event.type == sf::Event::JoystickButtonPressed && event.joystickButton.button == 11)) {
                 std::cout << "Reprise du jeu..." << std::endl;
@@ -224,4 +222,9 @@ std::vector<IRoom *> Game::getRooms() const
 sf::Music::Status Game::getNarrationStatus() const
 {
     return _narrations[_currentRoom].get()->getStatus();
+}
+
+void Game::setScene(GameState scene)
+{
+    _currentScene = GameState::GAME;
 }

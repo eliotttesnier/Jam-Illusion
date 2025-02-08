@@ -6,19 +6,18 @@
 */
 
 #include "MainMenu.hpp"
+#include "Game.hpp"
 
-MainMenu::MainMenu() {
-    // Charger la police
+MainMenu::MainMenu()
+{
     _font.loadFromFile("assets/fonts/font.otf");
 
-    // Initialiser le titre
     _title.setFont(_font);
     _title.setString("Jamy-llusion");
     _title.setCharacterSize(100);
     _title.setFillColor(sf::Color::White);
     _title.setPosition(1920 / 2 - _title.getGlobalBounds().width / 2, 150);
 
-    // Initialiser le bouton Play
     _playButton.setFont(_font);
     _playButton.setString("Play");
     _playButton.setCharacterSize(50);
@@ -28,19 +27,30 @@ MainMenu::MainMenu() {
     _playButton.setOutlineThickness(5);
 }
 
+
 MainMenu::~MainMenu() {}
 
-void MainMenu::handleEvent(sf::Event& event)
-{
+void MainMenu::handleEvent(sf::Event& event, sf::RenderWindow& window, Game& game) {
     if (event.type == sf::Event::KeyPressed) {
         if (event.key.code == sf::Keyboard::Enter) {
+            // Ajouter ici l'action à réaliser lorsque la touche "Enter" est pressée
         }
+    }
+    if (event.type == sf::Event::MouseButtonPressed) {
         if (event.mouseButton.button == sf::Mouse::Left) {
-            if (_playButton.getGlobalBounds().contains(sf::Mouse::getPosition().x, sf::Mouse::getPosition().y))
-                _playButton.setFillColor(sf::Color::Green);
+            // Récupère la position de la souris dans la fenêtre
+            sf::Vector2i mousePos = sf::Mouse::getPosition(window);
+
+            // Vérifie si le clic se produit à l'intérieur du bouton Play
+            if (_playButton.getGlobalBounds().contains(static_cast<sf::Vector2f>(mousePos))) {
+                // Change la couleur du bouton lorsqu'il est cliqué
+                game.setScene(GameState::GAME);
+            }
         }
     }
 }
+
+
 
 void MainMenu::update()
 {

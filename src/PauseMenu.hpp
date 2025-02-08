@@ -16,7 +16,7 @@ private:
 
 public:
     PauseMenu();
-    void handleEvent(sf::Event& event) override;
+    void handleEvent(sf::Event& event, sf::RenderWindow &window, Game& game) override;
     void update() override {}
     void draw(sf::RenderWindow& window) override;
 };

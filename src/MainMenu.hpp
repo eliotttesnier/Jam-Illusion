@@ -11,17 +11,18 @@
 #include <SFML/Graphics.hpp>
 
 class MainMenu : public IMenu {
-public:
-    MainMenu();
-    ~MainMenu();
+    public:
+        MainMenu();
+        ~MainMenu();
 
-    // Implémentation des méthodes de l'interface IMenu
-    void handleEvent(sf::Event& event) override;
-    void update() override;
-    void draw(sf::RenderWindow& window) override;
+        // Implémentation des méthodes de l'interface IMenu
+        void handleEvent(sf::Event& event, sf::RenderWindow &window, Game& game) override;
+        void update() override;
+        void draw(sf::RenderWindow& window) override;
 
-private:
-    sf::Text _title;
-    sf::Text _playButton;
-    sf::Font _font;
+    private:
+        sf::Text _title;
+        sf::Text _playButton;
+        sf::Font _font;
+        
 };
