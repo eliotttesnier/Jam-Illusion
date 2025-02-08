@@ -29,6 +29,9 @@ class Object {
         std::string getName() const;
         int getRedirectTo() const;
         Type getType() const;
+        bool isLocked() const;
+
+        void unlock();
 
     protected:
     private:
@@ -38,10 +41,11 @@ class Object {
 
         // Doors
         int _redirectTo;
+        bool _isLocked;
 
         // Animation
         sf::Sprite _sprite;
-        sf::Texture _textures[4];
+        sf::Texture _textures[5];
         int _currentFrame;
         sf::Clock _animationClock;
         sf::Clock _pauseClock;

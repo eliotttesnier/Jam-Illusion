@@ -61,7 +61,7 @@ Game::Game()
     _interactText.setString("Appuyez sur E (Clavier) ou B (Manette) pour interagir...");
 
     _player.setGame(this);
-    setCurrentRoom(0);
+    setCurrentRoom(1);
 }
 
 Game::~Game()
@@ -149,7 +149,7 @@ void Game::update()
     // Interactions HUD
     _canInteract = false;
     for (auto &Object : _rooms[_currentRoom]->getObjects()) {
-        if (Object.isColliding(_player.getSprite().getGlobalBounds()))
+        if (Object->isColliding(_player.getSprite().getGlobalBounds()))
             _canInteract = true;
     }
     for (auto &pnj : _rooms[_currentRoom]->getPNJs()) {

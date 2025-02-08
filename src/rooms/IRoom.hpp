@@ -18,7 +18,7 @@ class IRoom {
         virtual void draw(sf::RenderWindow &window) = 0;
 
         virtual sf::Image getCollisions() const = 0;
-        virtual std::vector<Object> getObjects() const = 0;
+        virtual std::vector<Object *> getObjects() const = 0;
         virtual std::vector<PNJ *> getPNJs() const = 0;
         virtual sf::Vector2f getSpawnPoint() const = 0;
 
