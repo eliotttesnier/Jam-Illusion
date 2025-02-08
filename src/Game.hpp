@@ -17,6 +17,7 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
 #include <memory>
+#include "Music.hpp"
 
 enum class GameState { MAIN_MENU, GAME, PAUSE };
 
@@ -45,7 +46,7 @@ class Game
         // Scene logic
         GameState _currentScene;
         IMenu* _currentMenu;
-
+        Music _music;
         Player _player;
 
         // Graphics
