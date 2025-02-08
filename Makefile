@@ -37,7 +37,7 @@ TEST_SRC =  tests/tests.cpp
 INCLUDES = -I./src/ -I./src/rooms/
 
 CFLAGS =	-std=c++20 -Wall -Wextra -Werror -Wno-unused-parameter \
-			-Wno-unused-variable
+			-Wno-unused-variable -g
 
 LIBS =  -lsfml-window -lsfml-graphics -lsfml-system -lsfml-audio \
 		-lsfml-network

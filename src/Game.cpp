@@ -17,7 +17,7 @@ Game::Game()
 {
     _clock.restart();
     _deltaTime = 0.0f;
-    _window.create(sf::VideoMode(1920, 1080), "Jamy-llusion", sf::Style::Fullscreen | sf::Style::Titlebar);
+    _window.create(sf::VideoMode(1920, 1080), "Jamy-llusion", sf::Style::Titlebar);
     _window.setFramerateLimit(60);
     _player = Player();
     _view.setCenter(_player.getCenter());
@@ -175,21 +175,20 @@ void Game::update()
 
 void Game::draw()
 {
-    _window.clear();
+    _window.clear(sf::Color::Black);  // Clear window at start of every frame
+    
     if (_currentScene == GameState::MAIN_MENU) {
         _mainMenu.draw(_window);
-        _window.display();
-        return;
     } else if (_currentScene == GameState::PAUSE) {
         _rooms[_currentRoom]->draw(_window);
-        _window.display();
+        _pauseMenu.draw(_window);
     } else {
         _rooms[_currentRoom]->draw(_window);
         _player.draw(_window);
-        _interactText.setFont(_interactFont);
         _window.draw(_interactText);
-        _window.display();
     }
+    
+    _window.display();
 }
 
 int Game::getCurrentRoom() const

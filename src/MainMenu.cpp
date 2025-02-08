@@ -2,12 +2,18 @@
 #include <iostream>
 
 MainMenu::MainMenu() : selectedIndex(0) {
-    font.loadFromFile("assets/fonts/font.otf");
+    if (!font.loadFromFile("assets/fonts/font.otf")) {
+        throw std::runtime_error("Failed to load font");
+    }
 
     title.setFont(font);
     title.setString("Menu Principal");
     title.setCharacterSize(50);
-    title.setPosition(300, 100);
+    title.setFillColor(sf::Color::White);
+    // Center the title text
+    sf::FloatRect titleBounds = title.getLocalBounds();
+    title.setOrigin(titleBounds.width / 2, titleBounds.height / 2);
+    title.setPosition(400, 100);  // Assuming window width is 800
 
     std::vector<std::string> texts = {"Jouer", "Quitter"};
     for (size_t i = 0; i < texts.size(); i++) {
@@ -21,7 +27,10 @@ MainMenu::MainMenu() : selectedIndex(0) {
         text.setString(texts[i]);
         text.setCharacterSize(30);
         text.setFillColor(sf::Color::Black);
-        text.setPosition(330, 210 + i * 70);
+        // Center text in button
+        sf::FloatRect textBounds = text.getLocalBounds();
+        text.setOrigin(textBounds.width / 2, textBounds.height / 2);
+        text.setPosition(400, 225 + i * 70);
         options.push_back(text);
     }
 }
@@ -47,11 +56,14 @@ void MainMenu::handleEvent(sf::Event& event) {
 }
 
 void MainMenu::draw(sf::RenderWindow& window) {
-    window.clear(sf::Color::Black);
-    window.draw(title);
-    for (size_t i = 0; i < options.size(); i++) {
-        buttons[i].setFillColor(i == selectedIndex ? sf::Color::Red : sf::Color::White);
-        window.draw(buttons[i]);
-        window.draw(options[i]);
+    if (!font.getInfo().family.empty()) {  // Check if font is loaded
+        window.draw(title);
+        for (size_t i = 0; i < options.size(); i++) {
+            if (i < buttons.size()) {  // Bounds checking
+                buttons[i].setFillColor(i == selectedIndex ? sf::Color::Red : sf::Color::White);
+                window.draw(buttons[i]);
+                window.draw(options[i]);
+            }
+        }
     }
 }
