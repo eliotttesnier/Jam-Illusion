@@ -158,16 +158,16 @@ void Game::draw()
 {
     _window.clear();
     if (_currentScene == GameState::MAIN_MENU) {
-        _rooms[_currentRoom].draw(_window);
+        _rooms[_currentRoom]->draw(_window);
         _window.display();
         return;
     } else if (_currentScene == GameState::PAUSE) {
-        _rooms[_currentRoom].draw(_window);
+        _rooms[_currentRoom]->draw(_window);
         _window.display();
     } else {
-        _rooms[_currentRoom].draw(_window);
+        _rooms[_currentRoom]->draw(_window);
         for (auto& pnj : _pnjs) {
-          pnj.draw(_window);
+        pnj.draw(_window);
         }
         _player.draw(_window);
         _interactText.setFont(_interactFont);
