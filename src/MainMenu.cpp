@@ -25,6 +25,14 @@ MainMenu::MainMenu()
     _playButton.setOutlineColor(sf::Color::Red);
     _playButton.setPosition(1920 / 2 - _playButton.getGlobalBounds().width / 2, 350);
     _playButton.setOutlineThickness(5);
+
+    _quitButton.setFont(_font);
+    _quitButton.setString("Quit");
+    _quitButton.setCharacterSize(50);
+    _quitButton.setFillColor(sf::Color::White);
+    _quitButton.setOutlineColor(sf::Color::Red);
+    _quitButton.setPosition(1920 / 2 - (_playButton.getGlobalBounds().width - 8) / 2, 450);
+    _quitButton.setOutlineThickness(5);
 }
 
 
@@ -40,6 +48,9 @@ void MainMenu::handleEvent(sf::Event& event, sf::RenderWindow& window, Game& gam
             sf::Vector2i mousePos = sf::Mouse::getPosition(window);
             if (_playButton.getGlobalBounds().contains(static_cast<sf::Vector2f>(mousePos))) {
                 game.setScene(GameState::GAME);
+            }
+            if (_quitButton.getGlobalBounds().contains(static_cast<sf::Vector2f>(mousePos))) {
+                window.close();
             }
         }
     }
@@ -57,4 +68,6 @@ void MainMenu::draw(sf::RenderWindow& window) {
     window.draw(_title);
     _playButton.setFont(_font);
     window.draw(_playButton);
+    _quitButton.setFont(_font);
+    window.draw(_quitButton);
 }

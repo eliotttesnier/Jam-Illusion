@@ -87,8 +87,11 @@ void Game::processEvents() {
                 std::cout << "Démarrage du jeu..." << std::endl;
                 _currentScene = GameState::GAME;
             }
+            if ((event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::F)) {
+                _window.close();
+            }
         }
-        else if (_currentScene == GameState::GAME) {
+        if (_currentScene == GameState::GAME) {
             if (getNarrationStatus() == sf::Music::Paused)
                 _narrations[_currentRoom].get()->play();
             if ((event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Escape)
