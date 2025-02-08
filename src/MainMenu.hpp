@@ -15,7 +15,7 @@ class MainMenu : public IMenu {
         MainMenu();
         ~MainMenu();
 
-        // Implémentation des méthodes de l'interface IMenu
+        // Method
         void handleEvent(sf::Event& event, sf::RenderWindow &window, Game& game) override;
         void update() override;
         void draw(sf::RenderWindow& window) override;
@@ -24,5 +24,4 @@ class MainMenu : public IMenu {
         sf::Text _title;
         sf::Text _playButton;
         sf::Font _font;
-        
 };

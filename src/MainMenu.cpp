@@ -33,17 +33,12 @@ MainMenu::~MainMenu() {}
 void MainMenu::handleEvent(sf::Event& event, sf::RenderWindow& window, Game& game) {
     if (event.type == sf::Event::KeyPressed) {
         if (event.key.code == sf::Keyboard::Enter) {
-            // Ajouter ici l'action à réaliser lorsque la touche "Enter" est pressée
         }
     }
     if (event.type == sf::Event::MouseButtonPressed) {
         if (event.mouseButton.button == sf::Mouse::Left) {
-            // Récupère la position de la souris dans la fenêtre
             sf::Vector2i mousePos = sf::Mouse::getPosition(window);
-
-            // Vérifie si le clic se produit à l'intérieur du bouton Play
             if (_playButton.getGlobalBounds().contains(static_cast<sf::Vector2f>(mousePos))) {
-                // Change la couleur du bouton lorsqu'il est cliqué
                 game.setScene(GameState::GAME);
             }
         }

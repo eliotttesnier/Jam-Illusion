@@ -50,7 +50,7 @@ Game::Game()
     _currentScene = GameState::MAIN_MENU;
     _mainMenu = MainMenu();
     _currentMenu = &_mainMenu;
-    _pauseMenu = PauseMenu();    // Interactions HUD
+    _pauseMenu = PauseMenu();
     _canInteract = false;
     _interactFont.loadFromFile("assets/fonts/font.otf");
     _interactText.setFont(_interactFont);
@@ -145,7 +145,6 @@ void Game::update()
     _view.setCenter(_player.getCenter());
     _window.setView(_view);
 
-    // Interactions HUD
     _canInteract = false;
     for (auto &Object : _rooms[_currentRoom]->getObjects()) {
         if (Object.isColliding(_player.getSprite().getGlobalBounds()))

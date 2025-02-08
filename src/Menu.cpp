@@ -10,7 +10,6 @@
 
 Menu::Menu(sf::RenderWindow &window) : window(window), isInMainMenu(true) {
     if (!font.loadFromFile("Arial.ttf")) {
-        // Charger la police (assurez-vous d'avoir la police ou utilisez un chemin valide)
         std::cerr << "Erreur de chargement de la police!" << std::endl;
     }
 
@@ -110,10 +109,8 @@ void Menu::handleMainMenuInput() {
     if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
         sf::Vector2i mousePos = sf::Mouse::getPosition(window);
         if (playButton.getGlobalBounds().contains(mousePos.x, mousePos.y)) {
-            // Lancer le jeu
             std::cout << "Lancer le jeu..." << std::endl;
         } else if (settingsButton.getGlobalBounds().contains(mousePos.x, mousePos.y)) {
-            // Ouvrir les paramètres
             std::cout << "Paramètres..." << std::endl;
         } else if (quitButton.getGlobalBounds().contains(mousePos.x, mousePos.y)) {
             window.close();
@@ -125,12 +122,11 @@ void Menu::handlePauseMenuInput(bool &isPaused) {
     if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
         sf::Vector2i mousePos = sf::Mouse::getPosition(window);
         if (resumeButton.getGlobalBounds().contains(mousePos.x, mousePos.y)) {
-            isPaused = false;  // Reprendre le jeu
+            isPaused = false;
         } else if (pauseSettingsButton.getGlobalBounds().contains(mousePos.x, mousePos.y)) {
-            // Ouvrir les paramètres
             std::cout << "Paramètres..." << std::endl;
         } else if (pauseQuitButton.getGlobalBounds().contains(mousePos.x, mousePos.y)) {
-            window.close();  // Quitter
+            window.close();
         }
     }
 }
