@@ -81,6 +81,8 @@ void Player::handleInput(std::vector<Object> objects)
                 if (object.getType() == Object::Type::DOOR) {
                     if (_game->getNarrationStatus() == sf::Music::Playing)
                         break;
+                    // if (object.isLocked())
+                    //     break;
                     _game->setCurrentRoom(object.getRedirectTo());
                     interactionClock.restart();
                     break;
@@ -91,6 +93,10 @@ void Player::handleInput(std::vector<Object> objects)
             if (pnj->isColliding(_sprite.getGlobalBounds())) {
                 if (_game->getNarrationStatus() == sf::Music::Playing)
                         break;
+                // Events
+                // if (_game->getCurrentRoom() == 1)
+                //     _game->getRooms()[1]->getObjects()[0].unlock();
+
                 pnj->set_talking();
                 pnj->nextDialogue();
                 interactionClock.restart();

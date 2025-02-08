@@ -6,6 +6,7 @@
 */
 
 #include "Exterior.hpp"
+#include <iostream>
 
 Exterior::Exterior(int nextRoom) : Room()
 {
