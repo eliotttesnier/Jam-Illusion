@@ -106,6 +106,9 @@ void Game::update()
         _view.setCenter(960, 540);
         _window.setView(_view);
         return;
+    } else {
+        _view.setSize(sf::Vector2f(1920, 1080));
+        _view.zoom(0.25f);
     }
 
     _player.update(_deltaTime, *_rooms[_currentRoom]);
