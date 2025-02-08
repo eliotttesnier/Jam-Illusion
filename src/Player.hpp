@@ -7,6 +7,8 @@
 
 #pragma once
 
+class Game;
+#include "IRoom.hpp"
 #include "Object.hpp"
 #include <SFML/Graphics.hpp>
 #include <iostream>
@@ -28,7 +30,7 @@ class Player {
         ~Player();
 
         // Methods
-        void update(float deltaTime, const sf::Image &collisions, std::vector<Object> objects);
+        void update(float deltaTime, IRoom &room);
         void handleInput(std::vector<Object> objects);
         void move(float deltaTime);
         void CheckCollisions(const sf::Image &collisions, float deltaTime);
@@ -44,6 +46,7 @@ class Player {
         // Setters
         void setPosition(const sf::Vector2f &position);
         void setSpeed(float speed);
+        void setGame(Game *game);
 
     protected:
     private:
@@ -58,4 +61,7 @@ class Player {
         std::map<Direction, std::vector<sf::Texture>>_textures;
         sf::Clock _animationClock;
         int _currentFrame;
+
+        // Game
+        Game *_game;
 };
