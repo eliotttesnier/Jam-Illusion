@@ -98,6 +98,14 @@ void Player::handleInput(std::vector<Object *> objects)
                     _game->getRooms()[1]->getObjects()[0]->unlock();
                 if (_game->getCurrentRoom() == 3)
                     _game->getRooms()[3]->getObjects()[0]->unlock();
+                if (_game->getCurrentRoom() == 7)
+                    _game->getRooms()[7]->getObjects()[0]->unlock();
+                if (_game->getCurrentRoom() == 8)
+                    _game->getRooms()[8]->getObjects()[0]->unlock();
+                if (_game->getCurrentRoom() == 9)
+                    _game->getRooms()[9]->getObjects()[0]->unlock();
+                if (_game->getCurrentRoom() == 10)
+                    _game->getRooms()[10]->getObjects()[0]->unlock();
 
                 pnj->set_talking();
                 pnj->nextDialogue();
