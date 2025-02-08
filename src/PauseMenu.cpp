@@ -55,6 +55,13 @@ void PauseMenu::handleEvent(sf::Event& event, sf::RenderWindow& window, Game& ga
             window.close();
         }
     }
+    if (event.type == sf::Event::JoystickButtonPressed && event.joystickButton.button == 2) {
+        game.setPause(false);
+        game.setScene(GameState::GAME);
+    }
+    if (event.type == sf::Event::JoystickButtonPressed && event.joystickButton.button == 3) {
+        window.close();
+    }
 }
 
 void PauseMenu::update()
