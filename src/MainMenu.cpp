@@ -23,21 +23,28 @@ MainMenu::MainMenu() {
     _playButton.setString("Play");
     _playButton.setCharacterSize(50);
     _playButton.setFillColor(sf::Color::White);
+    _playButton.setOutlineColor(sf::Color::Red);
     _playButton.setPosition(1920 / 2 - _playButton.getGlobalBounds().width / 2, 350);
+    _playButton.setOutlineThickness(5);
 }
 
 MainMenu::~MainMenu() {}
 
-void MainMenu::handleEvent(sf::Event& event) {
+void MainMenu::handleEvent(sf::Event& event)
+{
     if (event.type == sf::Event::KeyPressed) {
         if (event.key.code == sf::Keyboard::Enter) {
-            // Démarrer le jeu ou changer l'état
+        }
+        if (event.mouseButton.button == sf::Mouse::Left) {
+            if (_playButton.getGlobalBounds().contains(sf::Mouse::getPosition().x, sf::Mouse::getPosition().y))
+                _playButton.setFillColor(sf::Color::Green);
         }
     }
 }
 
-void MainMenu::update() {
-    // Si tu as des animations ou des changements à faire
+void MainMenu::update()
+{
+
 }
 
 void MainMenu::draw(sf::RenderWindow& window) {

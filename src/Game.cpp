@@ -131,6 +131,7 @@ void Game::update()
         }
         _mainMenu.update();
         _view.setSize(sf::Vector2f(1920, 1080));
+        _view.setCenter(1920 / 2, 1080 / 2);
         _window.setView(_view);
         return;
     } else {
