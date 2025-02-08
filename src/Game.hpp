@@ -8,6 +8,7 @@
 #pragma once
 
 #include "Player.hpp"
+#include "IRoom.hpp"
 #include "Room.hpp"
 #include "Object.hpp"
 #include "MainMenu.hpp"
@@ -27,6 +28,13 @@ class Game {
         void update();
         void draw();
 
+        // Getters
+        int getCurrentRoom() const;
+        std::vector<IRoom *> getRooms() const;
+
+        // Setters
+        void setCurrentRoom(int currentRoom);
+
     protected:
     private:
         // Scene logic
@@ -43,8 +51,7 @@ class Game {
 
         // Rooms
         int _currentRoom;
-        std::vector<Room> _rooms;
-        std::map<int, std::vector<Object>> _objects;
+        std::vector<IRoom *> _rooms;
 
         // Menus
         MainMenu _mainMenu;

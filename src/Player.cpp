@@ -6,6 +6,7 @@
 */
 
 #include "Player.hpp"
+#include "Game.hpp"
 #include <cmath>
 
 // Constructor
@@ -39,16 +40,17 @@ Player::~Player()
 }
 
 // Methods
-void Player::update(float deltaTime, const sf::Image &collisions, std::vector<Object> objects)
+void Player::update(float deltaTime, IRoom &room)
 {
-    handleInput(objects);
+    handleInput(room.getObjects());
     move(deltaTime);
-    CheckCollisions(collisions, deltaTime);
+    CheckCollisions(room.getCollisions(), deltaTime);
     animate(deltaTime);
 }
 
 void Player::handleInput(std::vector<Object> objects)
 {
+    static sf::Clock interactionClock;
     float joystickX = sf::Joystick::getAxisPosition(0, sf::Joystick::X);
     float joystickY = sf::Joystick::getAxisPosition(0, sf::Joystick::Y);
     _direction = sf::Vector2f(0.0f, 0.0f);
@@ -73,11 +75,13 @@ void Player::handleInput(std::vector<Object> objects)
         _currentDirection = Direction::IDLE;
     }
 
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::E) || sf::Joystick::isButtonPressed(0, 0)) {
+    if ((sf::Keyboard::isKeyPressed(sf::Keyboard::E) || sf::Joystick::isButtonPressed(0, 0)) && interactionClock.getElapsedTime().asSeconds() > 0.5f) {
         for (const auto &object : objects) {
             if (object.isColliding(_sprite.getGlobalBounds())) {
-                std::cout << "Colliding with " << object.getName() << std::endl;
-                exit(0);
+                _game->setCurrentRoom(_game->getCurrentRoom() + 1);
+                _position = _game->getRooms()[_game->getCurrentRoom()]->getSpawnPoint();
+                interactionClock.restart();
+                break;
             }
         }
     }
@@ -158,4 +162,10 @@ void Player::draw(sf::RenderWindow &window)
 const sf::Sprite &Player::getSprite() const
 {
     return _sprite;
+}
+
+void Player::setGame(Game *game)
+{
+    _game = game;
+    _position = _game->getRooms()[_game->getCurrentRoom()]->getSpawnPoint();
 }
