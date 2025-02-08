@@ -77,6 +77,8 @@ void Game::processEvents() {
             _window.close();
 
         if (_currentScene == GameState::MAIN_MENU) {
+            if (getNarrationStatus() == sf::Music::Playing)
+                _narrations[_currentRoom].get()->pause();
             _mainMenu.handleEvent(event);
             if ((event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Enter)
                 || (event.type == sf::Event::JoystickButtonPressed && event.joystickButton.button == 0)) {
@@ -85,6 +87,8 @@ void Game::processEvents() {
             }
         }
         else if (_currentScene == GameState::GAME) {
+            if (getNarrationStatus() == sf::Music::Paused)
+                _narrations[_currentRoom].get()->play();
             if ((event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Escape)
                 || (event.type == sf::Event::JoystickButtonPressed && event.joystickButton.button == 11)) {
                 std::cout << "Pause activée..." << std::endl;
@@ -93,6 +97,8 @@ void Game::processEvents() {
             }
         }
         else if (_currentScene == GameState::PAUSE) {
+            if (getNarrationStatus() == sf::Music::Playing)
+                _narrations[_currentRoom].get()->pause();
             _pauseMenu.handleEvent(event);
             if ((event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Escape)
                 || (event.type == sf::Event::JoystickButtonPressed && event.joystickButton.button == 11)) {
