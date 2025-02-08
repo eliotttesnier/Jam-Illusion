@@ -19,6 +19,8 @@ SRC =   src/main.cpp					\
 		src/Player.cpp					\
 		src/MainMenu.cpp				\
 		src/Object.cpp					\
+		src/dialogueLoader.cpp			\
+		src/pnj.cpp						\
 		src/rooms/Room.cpp				\
 		src/rooms/Exterior.cpp			\
 		src/rooms/FirstRoom.cpp			\
