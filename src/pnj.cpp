@@ -27,7 +27,6 @@ PNJ::PNJ(const sf::Vector2f& position, const std::string& dialogueFile)
         _dialogues.push_back("...");
     }
 
-    
     if (_font.loadFromFile("assets/fonts/font.otf")) {
         _dialogueText.setFont(_font);
     }
@@ -37,7 +36,8 @@ PNJ::PNJ(const sf::Vector2f& position, const std::string& dialogueFile)
     _dialogueText.setFillColor(sf::Color::White);
     _dialogueText.setString(_dialogues[_dialogueIndex]);
     _dialogueText.setPosition(position.x - (_dialogueText.getGlobalBounds().width / 2), position.y - _dialogueText.getGlobalBounds().height - 10);
-    talking = false;
+    _talking = false;
+    _talkingTimer.restart();
 }
 
 PNJ::~PNJ()
@@ -54,14 +54,18 @@ std::string PNJ::getNextDialogue()
 
 void PNJ::set_talking()
 {
-    talking = true;
+    _talking = true;
+    _talkingTimer.restart();
 }
 
 void PNJ::draw(sf::RenderWindow& window)
 {
+    if (_talking && _talkingTimer.getElapsedTime().asSeconds() > 2) {
+        _talking = false;
+    }
     _sprite.setTexture(_texture);
     window.draw(_sprite);
-    if (talking) {
+    if (_talking) {
         if (!_dialogues.empty()) {
             _dialogueText.setFont(_font);
             _dialogueText.setPosition(pos.x - (_dialogueText.getGlobalBounds().width / 2) + 7.5, pos.y - _dialogueText.getGlobalBounds().height - 10);
@@ -72,7 +76,10 @@ void PNJ::draw(sf::RenderWindow& window)
 
 bool PNJ::isColliding(const sf::FloatRect& playerBounds) const
 {
-    return _triggerBox.intersects(playerBounds);
+    sf::FloatRect bottomHalf(playerBounds.left, playerBounds.top + playerBounds.height / 1.5, playerBounds.width, playerBounds.height / 1.5);
+    sf::FloatRect biggerTriggerBox(_triggerBox.left - 10, _triggerBox.top - 10, _triggerBox.width + 20, _triggerBox.height + 20);
+
+    return biggerTriggerBox.intersects(bottomHalf);
 }
 
 void PNJ::nextDialogue()

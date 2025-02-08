@@ -37,9 +37,6 @@ Game::Game()
     _currentScene = SCENE::GAME;
     _mainMenu = MainMenu();
 
-    //PNJ
-    _pnjs.push_back(PNJ(sf::Vector2f(50, 50), "dialogues/room0.txt"));
-
     // Interactions HUD
     _canInteract = false;
     _interactFont.loadFromFile("assets/fonts/font.otf");
@@ -86,26 +83,19 @@ void Game::update()
         return;
     }
 
-    for (auto& pnj : _pnjs) {
-        if (pnj.isColliding(_player.getSprite().getGlobalBounds())) {
-            if (sf::Keyboard::isKeyPressed(sf::Keyboard::E)) {
-                pnj.set_talking();
-                pnj.nextDialogue();
-            }
-        }
-    }
-
     _player.update(_deltaTime, *_rooms[_currentRoom]);
     _view.setCenter(_player.getCenter());
     _window.setView(_view);
 
     // Interactions HUD
+    _canInteract = false;
     for (auto &Object : _rooms[_currentRoom]->getObjects()) {
-        if (Object.isColliding(_player.getSprite().getGlobalBounds())) {
+        if (Object.isColliding(_player.getSprite().getGlobalBounds()))
             _canInteract = true;
-        } else {
-            _canInteract = false;
-        }
+    }
+    for (auto &pnj : _rooms[_currentRoom]->getPNJs()) {
+        if (pnj->isColliding(_player.getSprite().getGlobalBounds()))
+            _canInteract = true;
     }
     _interactText.setPosition(_view.getCenter().x - _view.getSize().x / 2 + 2, _view.getCenter().y - _view.getSize().y / 2 - 2);
 
@@ -133,10 +123,7 @@ void Game::draw()
 {
     _window.clear();
     _rooms[_currentRoom]->draw(_window);
-    for (auto& pnj : _pnjs) {
-        pnj.draw(_window);
-    }
-  _player.draw(_window);
+    _player.draw(_window);
     _interactText.setFont(_interactFont);
     _window.draw(_interactText);
     _window.display();

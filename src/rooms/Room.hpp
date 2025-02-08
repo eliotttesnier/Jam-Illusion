@@ -19,11 +19,13 @@ class Room : public IRoom {
         sf::Image getCollisions() const;
         std::vector<Object> getObjects() const;
         sf::Vector2f getSpawnPoint() const;
+        std::vector<PNJ *> getPNJs() const;
 
     protected:
         sf::Sprite _sprite;
         sf::Texture _texture;
         sf::Image _collisions;
         std::vector<Object> _objects;
+        std::vector<PNJ *> _pnjs;
         sf::Vector2f _spawnPoint;
 };

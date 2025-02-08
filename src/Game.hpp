@@ -57,9 +57,6 @@ class Game {
         // Menus
         MainMenu _mainMenu;
 
-        //PNJ
-        std::vector<PNJ> _pnjs;
-
         // Interactions HUD
         bool _canInteract;
         sf::Text _interactText;
