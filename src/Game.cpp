@@ -62,16 +62,18 @@ void Game::processEvents() {
     while (_window.pollEvent(event)) {
         if (event.type == sf::Event::Closed)
             _window.close();
-        
+
         if (_currentScene == GameState::MAIN_MENU) {
             _mainMenu.handleEvent(event);
-            if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Enter) {
+            if ((event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Enter)
+                || (event.type == sf::Event::JoystickButtonPressed && event.joystickButton.button == 0)) {
                 std::cout << "Démarrage du jeu..." << std::endl;
                 _currentScene = GameState::GAME;
             }
-        } 
+        }
         else if (_currentScene == GameState::GAME) {
-            if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Escape) {
+            if ((event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Escape)
+                || (event.type == sf::Event::JoystickButtonPressed && event.joystickButton.button == 11)) {
                 std::cout << "Pause activée..." << std::endl;
                 _currentScene = GameState::PAUSE;
                 _currentMenu = &_pauseMenu;
@@ -79,7 +81,8 @@ void Game::processEvents() {
         }
         else if (_currentScene == GameState::PAUSE) {
             _pauseMenu.handleEvent(event);
-            if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Escape) {
+            if ((event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Escape)
+                || (event.type == sf::Event::JoystickButtonPressed && event.joystickButton.button == 11)) {
                 std::cout << "Reprise du jeu..." << std::endl;
                 _currentScene = GameState::GAME;
                 _currentMenu = &_mainMenu;
