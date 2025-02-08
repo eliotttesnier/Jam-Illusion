@@ -43,6 +43,7 @@ class Game
         void setCurrentRoom(int currentRoom);
         void setScene(GameState scene);
         void setScreaming(bool screaming);
+        void setPause(bool pause);
 
     protected:
     private:
@@ -73,4 +74,5 @@ class Game
         sf::Text _interactText;
         sf::Font _interactFont;
         bool _screaming;
+        bool ispaused;
 };

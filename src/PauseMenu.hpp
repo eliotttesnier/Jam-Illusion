@@ -8,15 +8,20 @@
 #pragma once
 
 #include "IMenu.hpp"
+#include <SFML/Graphics.hpp>
 
 class PauseMenu : public IMenu {
-private:
-    sf::Font font;
-    sf::Text text;
+    public:
+        PauseMenu();
+        ~PauseMenu();
 
-public:
-    PauseMenu();
-    void handleEvent(sf::Event& event, sf::RenderWindow &window, Game& game) override;
-    void update() override {}
-    void draw(sf::RenderWindow& window) override;
+        void handleEvent(sf::Event& event, sf::RenderWindow &window, Game& game) override;
+        void update() override;
+        void draw(sf::RenderWindow& window) override;
+
+    private:
+        sf::Text _pauseText;
+        sf::Text _resumeButton;
+        sf::Text _quitButton;
+        sf::Font _font;
 };
