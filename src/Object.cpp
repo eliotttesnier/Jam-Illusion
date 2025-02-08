@@ -17,7 +17,6 @@ Object::Object(sf::FloatRect triggerBox, std::string name, Type type, ...)
     _redirectTo = 0;
     _currentFrame = 0;
     _isAnimating = true;
-    // _isLocked = true;
 
     if (type == Type::DOOR) {
         va_list args;
@@ -92,13 +91,3 @@ Object::Type Object::getType() const
 {
     return _type;
 }
-
-// bool Object::isLocked() const
-// {
-//     return _isLocked;
-// }
-
-// void Object::unlock()
-// {
-//     _isLocked = false;
-// }

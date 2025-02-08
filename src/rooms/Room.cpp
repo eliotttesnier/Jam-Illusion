@@ -14,6 +14,9 @@ Room::Room()
 
 Room::~Room()
 {
+    for (auto &pnj : _pnjs) {
+        delete pnj;
+    }
 }
 
 // Methods

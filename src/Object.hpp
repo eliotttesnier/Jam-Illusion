@@ -29,9 +29,6 @@ class Object {
         std::string getName() const;
         int getRedirectTo() const;
         Type getType() const;
-        // bool isLocked() const;
-
-        // void unlock();
 
     protected:
     private:
