@@ -19,5 +19,4 @@ class Button {
         sf::Text text;
         sf::Font font;
         std::function<void()> onClick;
-    
 };
