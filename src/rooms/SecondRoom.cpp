@@ -13,7 +13,8 @@ SecondRoom::SecondRoom(int nextRoom)
     _sprite.setTexture(_texture);
     _collisions.loadFromFile("assets/collision/room2_collision.png");
     _spawnPoint = sf::Vector2f(40, 25);
-    _objects.push_back(new Object(sf::FloatRect(37, 31, 21, 10), "Door", Object::Type::DOOR, nextRoom, false));
+    _objects.push_back(new Object(sf::FloatRect(37, 31, 21, 10), "Door", Object::Type::DOOR, nextRoom, true));
+    _objects.push_back(new Object(sf::FloatRect(288, 31, 29, 10), "Library", Object::Type::LIBRARY));
 }
 
 SecondRoom::~SecondRoom()
