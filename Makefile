@@ -18,6 +18,7 @@ SRC =   src/main.cpp					\
 		src/Game.cpp					\
 		src/Player.cpp					\
 		src/MainMenu.cpp				\
+		src/PauseMenu.cpp				\
 		src/Object.cpp					\
 		src/dialogueLoader.cpp			\
 		src/pnj.cpp						\

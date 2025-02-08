@@ -12,9 +12,9 @@
 class IMenu {
 public:
     virtual ~IMenu() = default;
-    virtual void handleEvent() = 0;
+    virtual void handleEvent(sf::Event& event) = 0;
     virtual void update() = 0;
-    virtual void render(sf::RenderWindow& window) = 0;
+    virtual void draw(sf::RenderWindow& window) = 0;
 };
 
 

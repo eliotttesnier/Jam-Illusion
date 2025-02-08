@@ -9,7 +9,7 @@
 #include <iostream>
 
 PauseMenu::PauseMenu() {
-    font.loadFromFile("arial.ttf");
+    font.loadFromFile("assets/fonts/font.otf");
     text.setFont(font);
     text.setString("Pause\nAppuyez sur Échap pour reprendre");
     text.setCharacterSize(40);
@@ -22,6 +22,6 @@ void PauseMenu::handleEvent(sf::Event& event) {
     }
 }
 
-void PauseMenu::render(sf::RenderWindow& window) {
+void PauseMenu::draw(sf::RenderWindow& window) {
     window.draw(text);
 }
