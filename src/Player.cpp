@@ -96,6 +96,8 @@ void Player::handleInput(std::vector<Object *> objects)
                 // Events
                 if (_game->getCurrentRoom() == 1)
                     _game->getRooms()[1]->getObjects()[0]->unlock();
+                if (_game->getCurrentRoom() == 3)
+                    _game->getRooms()[3]->getObjects()[0]->unlock();
 
                 pnj->set_talking();
                 pnj->nextDialogue();
