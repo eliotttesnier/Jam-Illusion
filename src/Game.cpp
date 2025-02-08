@@ -43,7 +43,7 @@ Game::Game()
     _interactText.setFillColor(sf::Color(255, 255, 255, 0));
     _interactText.setString("Appuyez sur E (Clavier) ou B (Manette) pour interagir...");
 
-    _player.setGame(this)
+    _player.setGame(this);
 }
 
 Game::~Game()
