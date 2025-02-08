@@ -20,6 +20,9 @@ void Room::draw(sf::RenderWindow &window)
 {
     _sprite.setTexture(_texture);
     window.draw(_sprite);
+    for (auto &pnj : _pnjs) {
+        pnj->draw(window);
+    }
 }
 
 // Getters
@@ -36,4 +39,9 @@ std::vector<Object> Room::getObjects() const
 sf::Vector2f Room::getSpawnPoint() const
 {
     return _spawnPoint;
+}
+
+std::vector<PNJ *> Room::getPNJs() const
+{
+    return _pnjs;
 }

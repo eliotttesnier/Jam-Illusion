@@ -34,11 +34,12 @@ class PNJ {
         sf::Texture _texture;
         sf::FloatRect _triggerBox;
         sf::Vector2f pos;
-        bool talking;
+        bool _talking;
         std::vector<std::string> _dialogues;
         int _dialogueIndex;
         static sf::Clock _interactionClock;
-        static constexpr float _interactionCooldown = 1.0f;
+        static constexpr float _interactionCooldown = 0.5f;
         sf::Font _font;
         sf::Text _dialogueText;
+        sf::Clock _talkingTimer;
 };

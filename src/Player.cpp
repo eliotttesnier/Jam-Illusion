@@ -86,6 +86,14 @@ void Player::handleInput(std::vector<Object> objects)
                 }
             }
         }
+        for (auto &pnj : _game->getRooms()[_game->getCurrentRoom()]->getPNJs()) {
+            if (pnj->isColliding(_sprite.getGlobalBounds())) {
+                pnj->set_talking();
+                pnj->nextDialogue();
+                interactionClock.restart();
+                break;
+            }
+        }
     }
 }
 
