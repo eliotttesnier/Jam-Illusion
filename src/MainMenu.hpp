@@ -16,6 +16,7 @@ private:
     sf::Text title;
     std::vector<sf::Text> options;
     size_t selectedIndex;
+    std::vector<sf::RectangleShape> buttons;
 
 public:
     MainMenu();

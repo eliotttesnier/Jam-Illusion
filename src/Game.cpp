@@ -177,7 +177,7 @@ void Game::draw()
 {
     _window.clear();
     if (_currentScene == GameState::MAIN_MENU) {
-        _rooms[_currentRoom]->draw(_window);
+        _mainMenu.draw(_window);
         _window.display();
         return;
     } else if (_currentScene == GameState::PAUSE) {
