@@ -8,6 +8,7 @@
 #pragma once
 
 #include "Player.hpp"
+#include "Room.hpp"
 
 class Game {
     public:
@@ -29,4 +30,8 @@ class Game {
         sf::Event _event;
         sf::Clock _clock;
         float _deltaTime;
+
+        // Rooms
+        int _currentRoom;
+        std::vector<Room> _rooms;
 };

@@ -17,6 +17,7 @@ NC=\033[0m
 SRC =   src/main.cpp					\
 		src/Game.cpp					\
 		src/Player.cpp					\
+		src/Room.cpp					\
 
 OBJ = $(SRC:.cpp=.o)
 

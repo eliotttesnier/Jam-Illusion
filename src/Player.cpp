@@ -6,13 +6,14 @@
 */
 
 #include "Player.hpp"
+#include <cmath>
 
 // Constructor
 Player::Player()
 {
-    _speed = 200.0f;
+    _speed = 150.0f;
     _currentFrame = 0;
-    _position = sf::Vector2f(0.0f, 0.0f);
+    _position = sf::Vector2f(352 / 2, 288 / 2);
     _direction = sf::Vector2f(0.0f, 0.0f);
     _currentDirection = Direction::DOWN;
 
@@ -38,10 +39,11 @@ Player::~Player()
 }
 
 // Methods
-void Player::update(float deltaTime)
+void Player::update(float deltaTime, const sf::Image &collisions)
 {
     handleInput();
     move(deltaTime);
+    CheckCollisions(collisions, deltaTime);
     animate(deltaTime);
 }
 
@@ -71,6 +73,9 @@ void Player::handleInput()
 
 void Player::move(float deltaTime)
 {
+    if (_direction.x != 0 && _direction.y != 0) {
+        _direction /= std::sqrt(2.0f);
+    }
     _position += _direction * _speed * deltaTime;
     _sprite.setPosition(_position);
 }
@@ -101,13 +106,27 @@ float Player::getSpeed() const
     return _speed;
 }
 
-void Player::CheckCollisions(const sf::FloatRect &bounds)
+void Player::CheckCollisions(const sf::Image &collisions, float deltaTime)
 {
-    if (!_sprite.getGlobalBounds().intersects(bounds))
-        return;
+    sf::Color collisionColor = sf::Color::Red;
+    sf::FloatRect playerBounds = _sprite.getGlobalBounds();
 
-    _position -= _direction * _speed * 0.1f;
-    _sprite.setPosition(_position);
+    std::vector<sf::Vector2i> pointsToCheck = {
+        sf::Vector2i(playerBounds.left, playerBounds.top + playerBounds.height / 2),
+        sf::Vector2i(playerBounds.left + playerBounds.width, playerBounds.top + playerBounds.height / 2),
+        sf::Vector2i(playerBounds.left, playerBounds.top + playerBounds.height),
+        sf::Vector2i(playerBounds.left + playerBounds.width, playerBounds.top + playerBounds.height)
+    };
+
+    for (const auto &point : pointsToCheck) {
+        if (point.x >= 0 && point.x < (int)collisions.getSize().x && point.y >= 0 && point.y < (int)collisions.getSize().y) {
+            if (collisions.getPixel(point.x, point.y) == collisionColor) {
+                _position -= _direction * _speed * deltaTime;
+                _sprite.setPosition(_position);
+                return;
+            }
+        }
+    }
 }
 
 void Player::animate(float deltaTime)
