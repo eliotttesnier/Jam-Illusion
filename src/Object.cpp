@@ -19,7 +19,9 @@ Object::~Object()
 
 bool Object::isColliding(const sf::FloatRect &other) const
 {
-    return _triggerBox.intersects(other);
+    sf::FloatRect bottomHalf(other.left, other.top + other.height / 1.5, other.width, other.height / 1.5);
+
+    return _triggerBox.intersects(bottomHalf);
 }
 
 std::string Object::getName() const

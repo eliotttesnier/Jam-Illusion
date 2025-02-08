@@ -73,10 +73,11 @@ void Player::handleInput(std::vector<Object> objects)
         _currentDirection = Direction::IDLE;
     }
 
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::E) || sf::Joystick::isButtonPressed(0, 0)) { // "a" button is usually button 0
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::E) || sf::Joystick::isButtonPressed(0, 0)) {
         for (const auto &object : objects) {
             if (object.isColliding(_sprite.getGlobalBounds())) {
                 std::cout << "Colliding with " << object.getName() << std::endl;
+                exit(0);
             }
         }
     }
@@ -123,8 +124,8 @@ void Player::CheckCollisions(const sf::Image &collisions, float deltaTime)
     sf::FloatRect playerBounds = _sprite.getGlobalBounds();
 
     std::vector<sf::Vector2i> pointsToCheck = {
-        sf::Vector2i(playerBounds.left, playerBounds.top + playerBounds.height / 2),
-        sf::Vector2i(playerBounds.left + playerBounds.width, playerBounds.top + playerBounds.height / 2),
+        sf::Vector2i(playerBounds.left, playerBounds.top + playerBounds.height / 1.5),
+        sf::Vector2i(playerBounds.left + playerBounds.width, playerBounds.top + playerBounds.height / 1.5),
         sf::Vector2i(playerBounds.left, playerBounds.top + playerBounds.height),
         sf::Vector2i(playerBounds.left + playerBounds.width, playerBounds.top + playerBounds.height)
     };

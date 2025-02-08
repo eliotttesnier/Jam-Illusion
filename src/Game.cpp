@@ -11,7 +11,7 @@ Game::Game()
 {
     _clock.restart();
     _deltaTime = 0.0f;
-    _window.create(sf::VideoMode(1920, 1080), "Jam-Illusion");
+    _window.create(sf::VideoMode(1920, 1080), "Jam-Illusion", sf::Style::Fullscreen | sf::Style::Titlebar);
     _window.setFramerateLimit(60);
     _player = Player();
     _view.setCenter(_player.getCenter());
@@ -22,7 +22,7 @@ Game::Game()
     _currentRoom = 0;
     _rooms.push_back(Room(1));
     _objects[0] = std::vector<Object>();
-    _objects[0].push_back(Object(sf::FloatRect(133, 31, 154, 41), "Door"));
+    _objects[0].push_back(Object(sf::FloatRect(133, 31, 21, 10), "Door"));
 
     // Menus
     _currentScene = SCENE::GAME;
