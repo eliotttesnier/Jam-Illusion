@@ -7,11 +7,23 @@
 
 #pragma once
 
-class Game {
-    public:
-        Game();
-        ~Game();
+#include <SFML/Graphics.hpp>
+#include "Player.hpp"
 
-    protected:
-    private:
+class Game
+{
+public:
+    Game();
+    void run();
+
+private:
+    void processEvents();
+    void update(sf::Time deltaTime);
+    void render();
+
+private:
+    sf::RenderWindow mWindow;
+    sf::Clock mClock;
+
+    Player mPlayer;
 };
