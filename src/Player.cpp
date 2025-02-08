@@ -101,6 +101,14 @@ void Player::handleInput(std::vector<Object *> objects)
                         _game->getRooms()[5]->getObjects()[0]->unlock();
                     break;
                 }
+                if (object->getType() == Object::Type::BARREL) {
+                    if (_game->getNarrationStatus() == sf::Music::Playing)
+                        break;
+                    interactionClock.restart();
+                    if (_game->getCurrentRoom() == 4)
+                        _game->getRooms()[4]->getObjects()[0]->unlock();
+                    break;
+                }
             }
         }
         for (auto &pnj : _game->getRooms()[_game->getCurrentRoom()]->getPNJs()) {

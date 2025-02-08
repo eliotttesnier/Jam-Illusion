@@ -15,6 +15,7 @@ class Object {
         enum Type {
             DOOR,
             LIBRARY,
+            BARREL,
         };
 
         Object(sf::FloatRect triggerBox, std::string name, Type type = Type::DOOR, ...);
