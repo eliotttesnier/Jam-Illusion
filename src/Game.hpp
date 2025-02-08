@@ -12,12 +12,12 @@
 #include "Room.hpp"
 #include "Object.hpp"
 #include "MainMenu.hpp"
-#include "pnj.hpp"
 #include "PauseMenu.hpp"
+#include "pnj.hpp"
 #include <SFML/Graphics.hpp>
+#include "Music.hpp"
 #include <SFML/Audio.hpp>
 #include <memory>
-#include "Music.hpp"
 
 enum class GameState { MAIN_MENU, GAME, PAUSE };
 
@@ -41,6 +41,7 @@ class Game
 
         // Setters
         void setCurrentRoom(int currentRoom);
+        void setScene(GameState scene);
         void setScreaming(bool screaming);
 
     protected:

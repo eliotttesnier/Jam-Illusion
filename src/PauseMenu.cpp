@@ -6,6 +6,7 @@
 */
 
 #include "PauseMenu.hpp"
+#include "Game.hpp"
 #include <iostream>
 
 PauseMenu::PauseMenu() {
@@ -16,7 +17,7 @@ PauseMenu::PauseMenu() {
     text.setPosition(200, 200);
 }
 
-void PauseMenu::handleEvent(sf::Event& event) {
+void PauseMenu::handleEvent(sf::Event& event, sf::RenderWindow &window, Game& game) {
     if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Escape) {
         std::cout << "Reprise du jeu..." << std::endl;
     }
