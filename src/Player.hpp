@@ -27,10 +27,10 @@ class Player {
         ~Player();
 
         // Methods
-        void update(float deltaTime);
+        void update(float deltaTime, const sf::Image &collisions);
         void handleInput();
         void move(float deltaTime);
-        void CheckCollisions(const sf::FloatRect &bounds);
+        void CheckCollisions(const sf::Image &collisions, float deltaTime);
         void animate(float deltaTime);
         void draw(sf::RenderWindow &window);
 

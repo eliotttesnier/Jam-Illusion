@@ -17,6 +17,10 @@ Game::Game()
     _view.setCenter(_player.getCenter());
     _view.setSize(sf::Vector2f(1920, 1080));
     _view.zoom(0.25f);
+
+    // Rooms
+    _currentRoom = 0;
+    _rooms.push_back(Room(1));
 }
 
 Game::~Game()
@@ -42,7 +46,7 @@ void Game::run()
 
 void Game::update()
 {
-    _player.update(_deltaTime);
+    _player.update(_deltaTime, _rooms[_currentRoom].getCollisions());
     _view.setCenter(_player.getCenter());
     _window.setView(_view);
 }
@@ -50,6 +54,7 @@ void Game::update()
 void Game::draw()
 {
     _window.clear();
+    _rooms[_currentRoom].draw(_window);
     _player.draw(_window);
     _window.display();
 }
