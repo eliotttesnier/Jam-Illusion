@@ -12,6 +12,7 @@ Music::Music()
 {
     _menuMusicPath = "assets/music/menu.wav";
     _gameMusicPath = "assets/music/game.wav";
+    _currentTrack = MENU;
 }
 
 Music::~Music()
@@ -21,6 +22,10 @@ Music::~Music()
 
 void Music::play(Type type)
 {
+    if (_currentTrack == type && isPlaying()) {
+        return;
+    }
+
     std::string path = (type == MENU) ? _menuMusicPath : _gameMusicPath;
 
     if (!_music.openFromFile(path)) {
@@ -28,6 +33,7 @@ void Music::play(Type type)
         return;
     }
 
+    _currentTrack = type;
     _music.setLoop(true);
     _music.play();
 }
@@ -45,4 +51,9 @@ void Music::setVolume(float volume)
 bool Music::isPlaying() const
 {
     return _music.getStatus() == sf::Music::Playing;
+}
+
+Music::Type Music::getCurrentTrack() const
+{
+    return _currentTrack;
 }
