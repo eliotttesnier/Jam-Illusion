@@ -17,7 +17,7 @@ Game::Game()
 {
     _clock.restart();
     _deltaTime = 0.0f;
-    _window.create(sf::VideoMode(1920, 1080), "Jam-Illusion", sf::Style::Fullscreen | sf::Style::Titlebar);
+    _window.create(sf::VideoMode(1920, 1080), "Jamy-llusion", sf::Style::Fullscreen | sf::Style::Titlebar);
     _window.setFramerateLimit(60);
     _player = Player();
     _view.setCenter(_player.getCenter());
