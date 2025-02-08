@@ -53,19 +53,19 @@ void Player::handleInput(std::vector<Object> objects)
     float joystickY = sf::Joystick::getAxisPosition(0, sf::Joystick::Y);
     _direction = sf::Vector2f(0.0f, 0.0f);
 
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Z) || joystickY < -50) {
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Z) || joystickY < -25) {
         _direction.y -= 1.0f;
         _currentDirection = Direction::UP;
     }
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::S) || joystickY > 50) {
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::S) || joystickY > 25) {
         _direction.y += 1.0f;
         _currentDirection = Direction::DOWN;
     }
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Q) || joystickX < -50) {
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Q) || joystickX < -25) {
         _direction.x -= 1.0f;
         _currentDirection = Direction::LEFT;
     }
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::D) || joystickX > 50) {
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::D) || joystickX > 25) {
         _direction.x += 1.0f;
         _currentDirection = Direction::RIGHT;
     }
