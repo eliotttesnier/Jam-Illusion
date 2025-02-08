@@ -9,9 +9,15 @@
 
 #include "Player.hpp"
 #include "Room.hpp"
+#include "MainMenu.hpp"
 
 class Game {
     public:
+        enum SCENE {
+            MAIN_MENU,
+            GAME
+        };
+
         Game();
         ~Game();
 
@@ -22,6 +28,9 @@ class Game {
 
     protected:
     private:
+        // Scene logic
+        SCENE _currentScene;
+
         Player _player;
 
         // Graphics
@@ -34,4 +43,7 @@ class Game {
         // Rooms
         int _currentRoom;
         std::vector<Room> _rooms;
+
+        // Menus
+        MainMenu _mainMenu;
 };

@@ -21,6 +21,10 @@ Game::Game()
     // Rooms
     _currentRoom = 0;
     _rooms.push_back(Room(1));
+
+    // Menus
+    _currentScene = SCENE::GAME;
+    _mainMenu = MainMenu();
 }
 
 Game::~Game()
@@ -46,6 +50,13 @@ void Game::run()
 
 void Game::update()
 {
+    if (_currentScene == SCENE::MAIN_MENU) {
+        _mainMenu.update();
+        _view.setSize(sf::Vector2f(1920, 1080));
+        _view.setCenter(960, 540);
+        _window.setView(_view);
+        return;
+    }
     _player.update(_deltaTime, _rooms[_currentRoom].getCollisions());
     _view.setCenter(_player.getCenter());
     _window.setView(_view);

@@ -18,6 +18,7 @@ SRC =   src/main.cpp					\
 		src/Game.cpp					\
 		src/Player.cpp					\
 		src/Room.cpp					\
+		src/MainMenu.cpp				\
 
 OBJ = $(SRC:.cpp=.o)
 

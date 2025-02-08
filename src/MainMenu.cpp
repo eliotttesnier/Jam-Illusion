@@ -27,28 +27,28 @@ MainMenu::MainMenu() : selectedIndex(0) {
     }
 }
 
-void MainMenu::handleEvent(sf::Event& event) {
-    if (event.type == sf::Event::KeyPressed) {
-        if (event.key.code == sf::Keyboard::Up) {
-            selectedIndex = (selectedIndex > 0) ? selectedIndex - 1 : options.size() - 1;
-            std::cout << "Option sélectionnée : " << options[selectedIndex].getString().toAnsiString() << std::endl;
-        } 
-        else if (event.key.code == sf::Keyboard::Down) {
-            selectedIndex = (selectedIndex < options.size() - 1) ? selectedIndex + 1 : 0;
-            std::cout << "Option sélectionnée : " << options[selectedIndex].getString().toAnsiString() << std::endl;
-        } 
-        else if (event.key.code == sf::Keyboard::Enter) {
-            if (selectedIndex == 0) {
-                std::cout << "Lancement du jeu..." << std::endl;
-            } 
-            else if (selectedIndex == 1) {
-                std::cout << "Fermeture du jeu..." << std::endl;
-                exit(0);
-            }
+void MainMenu::handleEvent() {
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
+        selectedIndex = (selectedIndex > 0) ? selectedIndex - 1 : options.size() - 1;
+        std::cout << "Option sélectionnée : " << options[selectedIndex].getString().toAnsiString() << std::endl;
+        sf::sleep(sf::milliseconds(150)); // To prevent rapid key press
+    }
+    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) {
+        selectedIndex = (selectedIndex < options.size() - 1) ? selectedIndex + 1 : 0;
+        std::cout << "Option sélectionnée : " << options[selectedIndex].getString().toAnsiString() << std::endl;
+        sf::sleep(sf::milliseconds(150)); // To prevent rapid key press
+    }
+    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Enter)) {
+        if (selectedIndex == 0) {
+            std::cout << "Lancement du jeu..." << std::endl;
         }
+        else if (selectedIndex == 1) {
+            std::cout << "Fermeture du jeu..." << std::endl;
+            exit(0);
+        }
+        sf::sleep(sf::milliseconds(150)); // To prevent rapid key press
     }
 }
-
 
 void MainMenu::render(sf::RenderWindow& window) {
     window.draw(title);
@@ -56,4 +56,8 @@ void MainMenu::render(sf::RenderWindow& window) {
         options[i].setFillColor(i == selectedIndex ? sf::Color::Red : sf::Color::White);
         window.draw(options[i]);
     }
+}
+
+void MainMenu::update() {
+    handleEvent();
 }
