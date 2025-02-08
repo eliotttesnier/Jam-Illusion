@@ -61,6 +61,7 @@ Game::Game()
     _interactText.setString("Appuyez sur E (Clavier) ou B (Manette) pour interagir...");
 
     _player.setGame(this);
+    ispaused = false;
     setCurrentRoom(0);
 }
 
@@ -197,7 +198,7 @@ void Game::draw()
         _window.display();
         return;
     } else if (_currentScene == GameState::PAUSE) {
-        _rooms[_currentRoom]->draw(_window);
+        _pauseMenu.draw(_window);
         _window.display();
     } else {
         _rooms[_currentRoom]->draw(_window);
@@ -247,4 +248,9 @@ bool Game::getScreaming() const
 void Game::setScreaming(bool screaming)
 {
     _screaming = screaming;
+}
+
+void Game::setPause(bool pause)
+{
+    ispaused = pause;
 }
