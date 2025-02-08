@@ -27,7 +27,7 @@ PNJ::PNJ(const sf::Vector2f& position, const std::string& dialogueFile)
         _dialogues.push_back("...");
     }
 
-    _font.loadFromFile("assets/fonts/font.otf");
+    
     if (_font.loadFromFile("assets/fonts/font.otf")) {
         _dialogueText.setFont(_font);
     }
