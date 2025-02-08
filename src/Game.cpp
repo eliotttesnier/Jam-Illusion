@@ -147,10 +147,15 @@ void Game::update()
     _window.setView(_view);
 
     // Interactions HUD
+    bool blocked = false;
     _canInteract = false;
     for (auto &Object : _rooms[_currentRoom]->getObjects()) {
-        if (Object->isColliding(_player.getSprite().getGlobalBounds()))
+        if (Object->isColliding(_player.getSprite().getGlobalBounds())) {
             _canInteract = true;
+            if (Object->getType() == Object::Type::DOOR && Object->isLocked()) {
+                blocked = true;
+            }
+        }
     }
     for (auto &pnj : _rooms[_currentRoom]->getPNJs()) {
         if (pnj->isColliding(_player.getSprite().getGlobalBounds()))
@@ -158,6 +163,8 @@ void Game::update()
     }
     if (_narrations[_currentRoom].get()->getStatus() == sf::Music::Playing)
         _interactText.setString("Vous ne pouvez pas interagir pendant que vous entendez des voix...");
+    else if (blocked)
+        _interactText.setString("La porte est fermee...");
     else
         _interactText.setString("Appuyez sur E (Clavier) ou B (Manette) pour interagir...");
     _interactText.setPosition(_view.getCenter().x - _view.getSize().x / 2 + 2, _view.getCenter().y - _view.getSize().y / 2 - 2);
