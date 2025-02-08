@@ -7,11 +7,8 @@
 
 #include "Room.hpp"
 
-Room::Room(int id)
+Room::Room()
 {
-    _texture.loadFromFile("assets/room/room" + std::to_string(id) + ".png");
-    _sprite.setTexture(_texture);
-    _collisions.loadFromFile("assets/collision/room" + std::to_string(id) + "_collision.png");
 }
 
 Room::~Room()
@@ -29,4 +26,14 @@ void Room::draw(sf::RenderWindow &window)
 sf::Image Room::getCollisions() const
 {
     return _collisions;
+}
+
+std::vector<Object> Room::getObjects() const
+{
+    return _objects;
+}
+
+sf::Vector2f Room::getSpawnPoint() const
+{
+    return _spawnPoint;
 }

@@ -6,11 +6,21 @@
 */
 
 #include "Object.hpp"
+#include <cstdarg>
 
-Object::Object(sf::FloatRect triggerBox, std::string name)
+Object::Object(sf::FloatRect triggerBox, std::string name, Type type, ...)
 {
     _triggerBox = triggerBox;
     _name = name;
+    _type = type;
+    _redirectTo = 0;
+
+    if (type == Type::DOOR) {
+        va_list args;
+        va_start(args, type);
+        _redirectTo = va_arg(args, int);
+        va_end(args);
+    }
 }
 
 Object::~Object()
@@ -27,4 +37,14 @@ bool Object::isColliding(const sf::FloatRect &other) const
 std::string Object::getName() const
 {
     return _name;
+}
+
+int Object::getRedirectTo() const
+{
+    return _redirectTo;
+}
+
+Object::Type Object::getType() const
+{
+    return _type;
 }

@@ -17,16 +17,24 @@ NC=\033[0m
 SRC =   src/main.cpp					\
 		src/Game.cpp					\
 		src/Player.cpp					\
-		src/Room.cpp					\
 		src/MainMenu.cpp				\
 		src/PauseMenu.cpp				\
 		src/Object.cpp					\
+		src/dialogueLoader.cpp			\
+		src/pnj.cpp						\
+		src/rooms/Room.cpp				\
+		src/rooms/Exterior.cpp			\
+		src/rooms/FirstRoom.cpp			\
+		src/rooms/SecondRoom.cpp		\
+		src/rooms/ThirdRoom.cpp			\
+		src/rooms/FourthRoom.cpp		\
+		src/rooms/Final.cpp			\
 
 OBJ = $(SRC:.cpp=.o)
 
 TEST_SRC =  tests/tests.cpp
 
-INCLUDES = -I./src/
+INCLUDES = -I./src/ -I./src/rooms/
 
 CFLAGS =	-std=c++20 -Wall -Wextra -Werror -Wno-unused-parameter \
 			-Wno-unused-variable

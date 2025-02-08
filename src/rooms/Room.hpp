@@ -7,20 +7,23 @@
 
 #pragma once
 
-#include <SFML/Graphics.hpp>
+#include "IRoom.hpp"
 
-class Room {
+class Room : public IRoom {
     public:
-        Room(int id);
+        Room();
         ~Room();
 
         void draw(sf::RenderWindow &window);
 
         sf::Image getCollisions() const;
+        std::vector<Object> getObjects() const;
+        sf::Vector2f getSpawnPoint() const;
 
     protected:
-    private:
         sf::Sprite _sprite;
         sf::Texture _texture;
         sf::Image _collisions;
+        std::vector<Object> _objects;
+        sf::Vector2f _spawnPoint;
 };
