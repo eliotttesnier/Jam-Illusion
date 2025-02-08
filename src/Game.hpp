@@ -7,13 +7,14 @@
 
 #pragma once
 
+#include "menus/Menu.hpp"
+#include "menus/PauseMenu.hpp"
+#include "menus/MainMenu.hpp"
 #include "Player.hpp"
 #include "IRoom.hpp"
 #include "Room.hpp"
 #include "Object.hpp"
-#include "MainMenu.hpp"
 #include "pnj.hpp"
-#include "PauseMenu.hpp"
 #include <SFML/Graphics.hpp>
 
 enum class GameState { MAIN_MENU, GAME, PAUSE };
@@ -37,12 +38,9 @@ class Game
         // Setters
         void setCurrentRoom(int currentRoom);
 
-    protected:
     private:
         // Scene logic
         GameState _currentScene;
-        IMenu* _currentMenu;
-
         Player _player;
 
         // Graphics
@@ -57,6 +55,7 @@ class Game
         std::vector<IRoom *> _rooms;
 
         // Menus
+        Menu *_currentMenu;
         MainMenu _mainMenu;
         PauseMenu _pauseMenu;
 

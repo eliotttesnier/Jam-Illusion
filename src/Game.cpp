@@ -64,21 +64,21 @@ void Game::processEvents() {
             _window.close();
         
         if (_currentScene == GameState::MAIN_MENU) {
-            _mainMenu.handleEvent(event);
+            _mainMenu.handleEvent(event, _currentScene);
             if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Enter) {
                 std::cout << "Démarrage du jeu..." << std::endl;
-                _currentScene = GameState::GAME;
+                // _currentScene = GameState::GAME;
             }
         } 
-        else if (_currentScene == GameState::GAME) {
+        if (_currentScene == GameState::GAME) {
             if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Escape) {
                 std::cout << "Pause activée..." << std::endl;
                 _currentScene = GameState::PAUSE;
                 _currentMenu = &_pauseMenu;
             }
         }
-        else if (_currentScene == GameState::PAUSE) {
-            _pauseMenu.handleEvent(event);
+         if (_currentScene == GameState::PAUSE) {
+            _pauseMenu.handleEvent(event, _currentScene);
             if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Escape) {
                 std::cout << "Reprise du jeu..." << std::endl;
                 _currentScene = GameState::GAME;
@@ -101,7 +101,7 @@ void Game::run()
 void Game::update()
 {
     if (_currentScene == GameState::MAIN_MENU) {
-        _mainMenu.update();
+        _mainMenu.update(_currentScene, GameState::MAIN_MENU);
         _view.setSize(sf::Vector2f(1920, 1080));
         _view.setCenter(960, 540);
         _window.setView(_view);

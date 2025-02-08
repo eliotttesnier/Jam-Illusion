@@ -17,8 +17,9 @@ NC=\033[0m
 SRC =   src/main.cpp					\
 		src/Game.cpp					\
 		src/Player.cpp					\
-		src/MainMenu.cpp				\
-		src/PauseMenu.cpp				\
+		src/menus/MainMenu.cpp			\
+		src/menus/Menu.cpp				\
+		src/menus/PauseMenu.cpp			\
 		src/Object.cpp					\
 		src/dialogueLoader.cpp			\
 		src/pnj.cpp						\
