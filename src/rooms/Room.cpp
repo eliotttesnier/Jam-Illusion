@@ -25,14 +25,20 @@ Room::~Room()
 // Methods
 void Room::draw(sf::RenderWindow &window)
 {
+    bool screamer = false;
+
     _sprite.setTexture(_texture);
     window.draw(_sprite);
     for(auto &object: _objects) {
         object->update();
         object->draw(window);
+        if (object->getType() == Object::Type::LIBRARY && object->isScreaming())
+            screamer = true;
     }
-    for (auto &pnj : _pnjs) {
-        pnj->draw(window);
+    if (!screamer) {
+        for (auto &pnj : _pnjs) {
+            pnj->draw(window);
+        }
     }
 }
 

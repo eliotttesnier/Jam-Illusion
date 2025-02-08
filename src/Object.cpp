@@ -27,10 +27,14 @@ Object::Object(sf::FloatRect triggerBox, std::string name, Type type, ...)
     }
 
     if (type == Type::LIBRARY) {
-        _screamerTexture.loadFromFile("assets/images/screamer.png");
+        static bool firsttime = true;
+        std::string name = (firsttime) ? "screamer" : "hugo";
+
+        firsttime = false;
+        _screamerTexture.loadFromFile("assets/images/" + name + ".png");
         _screamerSprite.setTexture(_screamerTexture);
         _screamerSprite.setScale(sf::Vector2f(0.5, 0.5));
-        _screamerSound.openFromFile("assets/music/screamer.wav");
+        _screamerSound.openFromFile("assets/music/" + name + ".wav");
     }
 
     for (int i = 0; i <= 4; ++i) {
