@@ -15,6 +15,8 @@
 #include "pnj.hpp"
 #include "PauseMenu.hpp"
 #include <SFML/Graphics.hpp>
+#include <SFML/Audio.hpp>
+#include <memory>
 
 enum class GameState { MAIN_MENU, GAME, PAUSE };
 
@@ -33,6 +35,7 @@ class Game
         // Getters
         int getCurrentRoom() const;
         std::vector<IRoom *> getRooms() const;
+        sf::Music::Status getNarrationStatus() const;
 
         // Setters
         void setCurrentRoom(int currentRoom);
@@ -55,6 +58,7 @@ class Game
         // Rooms
         int _currentRoom;
         std::vector<IRoom *> _rooms;
+        std::vector<std::unique_ptr<sf::Music>> _narrations;
 
         // Menus
         MainMenu _mainMenu;
