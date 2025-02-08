@@ -26,12 +26,24 @@ Game::Game()
 
     // Rooms
     _currentRoom = 0;
-    _rooms.push_back(new Exterior());
-    _rooms.push_back(new FirstRoom());
-    _rooms.push_back(new SecondRoom());
-    _rooms.push_back(new ThirdRoom());
-    _rooms.push_back(new FourthRoom());
+    _rooms.push_back(new Exterior(1));
+    _rooms.push_back(new FirstRoom(2));
+    _rooms.push_back(new SecondRoom(3));
+    _rooms.push_back(new FirstRoom(4));
+    _rooms.push_back(new ThirdRoom(5));
+    _rooms.push_back(new SecondRoom(6));
+    _rooms.push_back(new FourthRoom(7));
+    _rooms.push_back(new FirstRoom(8));
+    _rooms.push_back(new FirstRoom(9));
+    _rooms.push_back(new FirstRoom(10));
+    _rooms.push_back(new FirstRoom(11));
     _rooms.push_back(new Final());
+    for (int i = 1; i < (int)_rooms.size() + 1; i++) {
+        std::string path = "assets/sounds/wav/narration" + std::to_string(i) + ".wav";
+        auto music = std::make_unique<sf::Music>();
+        music->openFromFile(path);
+        _narrations.push_back(std::move(music));
+    }
 
     // Menus
     _currentScene = GameState::MAIN_MENU;
@@ -48,6 +60,7 @@ Game::Game()
     _interactText.setString("Appuyez sur E (Clavier) ou B (Manette) pour interagir...");
 
     _player.setGame(this);
+    setCurrentRoom(0);
 }
 
 Game::~Game()
@@ -64,6 +77,8 @@ void Game::processEvents() {
             _window.close();
 
         if (_currentScene == GameState::MAIN_MENU) {
+            if (getNarrationStatus() == sf::Music::Playing)
+                _narrations[_currentRoom].get()->pause();
             _mainMenu.handleEvent(event);
             if ((event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Enter)
                 || (event.type == sf::Event::JoystickButtonPressed && event.joystickButton.button == 0)) {
@@ -72,6 +87,8 @@ void Game::processEvents() {
             }
         }
         else if (_currentScene == GameState::GAME) {
+            if (getNarrationStatus() == sf::Music::Paused)
+                _narrations[_currentRoom].get()->play();
             if ((event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Escape)
                 || (event.type == sf::Event::JoystickButtonPressed && event.joystickButton.button == 11)) {
                 std::cout << "Pause activée..." << std::endl;
@@ -80,6 +97,8 @@ void Game::processEvents() {
             }
         }
         else if (_currentScene == GameState::PAUSE) {
+            if (getNarrationStatus() == sf::Music::Playing)
+                _narrations[_currentRoom].get()->pause();
             _pauseMenu.handleEvent(event);
             if ((event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Escape)
                 || (event.type == sf::Event::JoystickButtonPressed && event.joystickButton.button == 11)) {
@@ -128,6 +147,10 @@ void Game::update()
         if (pnj->isColliding(_player.getSprite().getGlobalBounds()))
             _canInteract = true;
     }
+    if (_narrations[_currentRoom].get()->getStatus() == sf::Music::Playing)
+        _interactText.setString("Vous ne pouvez pas interagir pendant que vous entendez des voix...");
+    else
+        _interactText.setString("Appuyez sur E (Clavier) ou B (Manette) pour interagir...");
     _interactText.setPosition(_view.getCenter().x - _view.getSize().x / 2 + 2, _view.getCenter().y - _view.getSize().y / 2 - 2);
 
     static sf::Clock timer;
@@ -178,9 +201,17 @@ void Game::setCurrentRoom(int currentRoom)
 {
     _currentRoom = currentRoom;
     _canInteract = false;
+    _interactText.setFillColor(sf::Color(255, 255, 255, 0));
+    _player.setPosition(_rooms[_currentRoom]->getSpawnPoint());
+    _narrations[_currentRoom].get()->play();
 }
 
 std::vector<IRoom *> Game::getRooms() const
 {
     return _rooms;
+}
+
+sf::Music::Status Game::getNarrationStatus() const
+{
+    return _narrations[_currentRoom].get()->getStatus();
 }

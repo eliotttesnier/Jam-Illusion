@@ -7,7 +7,7 @@
 
 #include "FirstRoom.hpp"
 
-FirstRoom::FirstRoom() : Room()
+FirstRoom::FirstRoom(int nextRoom) : Room()
 {
     _texture.loadFromFile("assets/room/room1.png");
     _sprite.setTexture(_texture);

@@ -11,7 +11,7 @@
 
 class FirstRoom : public Room {
     public:
-        FirstRoom();
+        FirstRoom(int nextRoom);
         ~FirstRoom();
 
     protected:

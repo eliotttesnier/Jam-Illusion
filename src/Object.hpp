@@ -22,6 +22,8 @@ class Object {
 
         // Methods
         bool isColliding(const sf::FloatRect &other) const;
+        void update();
+        void draw(sf::RenderWindow &window);
 
         // Getters
         std::string getName() const;
@@ -36,4 +38,12 @@ class Object {
 
         // Doors
         int _redirectTo;
+
+        // Animation
+        sf::Sprite _sprite;
+        sf::Texture _textures[4];
+        int _currentFrame;
+        sf::Clock _animationClock;
+        sf::Clock _pauseClock;
+        bool _isAnimating;
 };

@@ -21,6 +21,10 @@ void Room::draw(sf::RenderWindow &window)
 {
     _sprite.setTexture(_texture);
     window.draw(_sprite);
+    for(auto &object: _objects) {
+        object.update();
+        object.draw(window);
+    }
     for (auto &pnj : _pnjs) {
         pnj->draw(window);
     }
