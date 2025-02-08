@@ -32,15 +32,15 @@ void MainMenu::handleEvent(sf::Event& event) {
         if (event.key.code == sf::Keyboard::Up) {
             selectedIndex = (selectedIndex > 0) ? selectedIndex - 1 : options.size() - 1;
             std::cout << "Option sélectionnée : " << options[selectedIndex].getString().toAnsiString() << std::endl;
-        } 
+        }
         else if (event.key.code == sf::Keyboard::Down) {
             selectedIndex = (selectedIndex < options.size() - 1) ? selectedIndex + 1 : 0;
             std::cout << "Option sélectionnée : " << options[selectedIndex].getString().toAnsiString() << std::endl;
-        } 
+        }
         else if (event.key.code == sf::Keyboard::Enter) {
             if (selectedIndex == 0) {
                 std::cout << "Lancement du jeu..." << std::endl;
-            } 
+            }
             else if (selectedIndex == 1) {
                 std::cout << "Fermeture du jeu..." << std::endl;
                 exit(0);

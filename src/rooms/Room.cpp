@@ -86,13 +86,13 @@ sf::Vector2f Room::generateRandomPosition() const
     do {
         std::random_device rd;
         std::mt19937 gen(rd());
-        
+
         sf::Vector2u size = getMapSize();
         std::uniform_int_distribution<> disX(20, size.x - 20);
         std::uniform_int_distribution<> disY(20, size.y - 20);
-        
+
         position = sf::Vector2f(disX(gen), disY(gen));
     } while (!isValidDialogPosition(position));
-    
+
     return position;
 }

@@ -19,10 +19,10 @@ for file in "$INPUT_DIR"/*.mp3; do
     if [[ -f "$file" ]]; then
         # Récupère le nom de fichier sans extension
         filename=$(basename "$file" .mp3)
-        
+
         # Convertit le fichier MP3 en WAV
         ffmpeg -i "$file" "$OUTPUT_DIR/$filename.wav" -y
-        
+
         echo "Converti : $file -> $OUTPUT_DIR/$filename.wav"
     fi
 done
