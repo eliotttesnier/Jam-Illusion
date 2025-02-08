@@ -7,17 +7,15 @@
 
 #pragma once
 
-#include "menus/Menu.hpp"
-#include "menus/PauseMenu.hpp"
-#include "menus/MainMenu.hpp"
+#include <SFML/Graphics.hpp>
+#include "GameState.hpp"
 #include "Player.hpp"
 #include "IRoom.hpp"
 #include "Room.hpp"
 #include "Object.hpp"
 #include "pnj.hpp"
-#include <SFML/Graphics.hpp>
-
-enum class GameState { MAIN_MENU, GAME, PAUSE };
+#include "menus/MainMenu.hpp"
+#include "menus/PauseMenu.hpp"
 
 class Game
 {

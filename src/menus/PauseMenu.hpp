@@ -9,7 +9,7 @@
 
 #include "Menu.hpp"
 
-class PauseMenu : public Menu 
+class PauseMenu : public Menu
 {
     public:
         PauseMenu();

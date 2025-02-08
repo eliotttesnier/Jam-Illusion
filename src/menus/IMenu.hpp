@@ -8,9 +8,7 @@
 #pragma once
 
 #include <SFML/Graphics.hpp>
-#include "../Game.hpp"
-
-enum class GameState;
+#include "../GameState.hpp"
 
 class IMenu
 {
