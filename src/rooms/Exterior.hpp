@@ -11,7 +11,7 @@
 
 class Exterior : public Room {
     public:
-        Exterior();
+        Exterior(int nextRoom);
         ~Exterior();
 
     protected:

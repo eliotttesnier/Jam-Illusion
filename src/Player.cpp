@@ -79,8 +79,9 @@ void Player::handleInput(std::vector<Object> objects)
         for (const auto &object : objects) {
             if (object.isColliding(_sprite.getGlobalBounds())) {
                 if (object.getType() == Object::Type::DOOR) {
+                    if (_game->getNarrationStatus() == sf::Music::Playing)
+                        break;
                     _game->setCurrentRoom(object.getRedirectTo());
-                    _position = _game->getRooms()[_game->getCurrentRoom()]->getSpawnPoint();
                     interactionClock.restart();
                     break;
                 }
@@ -88,6 +89,8 @@ void Player::handleInput(std::vector<Object> objects)
         }
         for (auto &pnj : _game->getRooms()[_game->getCurrentRoom()]->getPNJs()) {
             if (pnj->isColliding(_sprite.getGlobalBounds())) {
+                if (_game->getNarrationStatus() == sf::Music::Playing)
+                        break;
                 pnj->set_talking();
                 pnj->nextDialogue();
                 interactionClock.restart();
