@@ -23,5 +23,6 @@ class MainMenu : public IMenu {
     private:
         sf::Text _title;
         sf::Text _playButton;
+        sf::Text _quitButton;
         sf::Font _font;
 };
