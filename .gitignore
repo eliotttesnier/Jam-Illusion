@@ -10,14 +10,6 @@
 *.out
 *.app
 
-# Fichiers de compilation
-CMakeFiles/
-CMakeCache.txt
-Makefile
-*.make
-*.ninja
-compile_commands.json
-
 # Fichiers d'éditeurs et d'IDE
 .vscode/
 .idea/
