@@ -23,6 +23,7 @@ Game::Game()
     _view.setCenter(_player.getCenter());
     _view.setSize(sf::Vector2f(1920, 1080));
     _view.zoom(0.25f);
+    _screaming = false;
     // _music.play(Music::MENU);
 
     // Rooms
@@ -48,10 +49,9 @@ Game::Game()
 
     // Menus
     _currentScene = GameState::MAIN_MENU;
-    _currentMenu = &_mainMenu;
     _mainMenu = MainMenu();
-
-    // Interactions HUD
+    _currentMenu = &_mainMenu;
+    _pauseMenu = PauseMenu();
     _canInteract = false;
     _interactFont.loadFromFile("assets/fonts/font.otf");
     _interactText.setFont(_interactFont);
@@ -80,7 +80,7 @@ void Game::processEvents() {
         if (_currentScene == GameState::MAIN_MENU) {
             if (getNarrationStatus() == sf::Music::Playing)
                 _narrations[_currentRoom].get()->pause();
-            _mainMenu.handleEvent(event);
+            _mainMenu.handleEvent(event, _window, *this);
             if ((event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Enter)
                 || (event.type == sf::Event::JoystickButtonPressed && event.joystickButton.button == 0)) {
                 std::cout << "Démarrage du jeu..." << std::endl;
@@ -100,7 +100,7 @@ void Game::processEvents() {
         else if (_currentScene == GameState::PAUSE) {
             if (getNarrationStatus() == sf::Music::Playing)
                 _narrations[_currentRoom].get()->pause();
-            _pauseMenu.handleEvent(event);
+            _pauseMenu.handleEvent(event, _window, *this);
             if ((event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Escape)
                 || (event.type == sf::Event::JoystickButtonPressed && event.joystickButton.button == 11)) {
                 std::cout << "Reprise du jeu..." << std::endl;
@@ -130,7 +130,7 @@ void Game::update()
         }
         _mainMenu.update();
         _view.setSize(sf::Vector2f(1920, 1080));
-        _view.setCenter(960, 540);
+        _view.setCenter(1920 / 2, 1080 / 2);
         _window.setView(_view);
         return;
     } else {
@@ -193,7 +193,7 @@ void Game::draw()
 {
     _window.clear();
     if (_currentScene == GameState::MAIN_MENU) {
-        _rooms[_currentRoom]->draw(_window);
+        _mainMenu.draw(_window);
         _window.display();
         return;
     } else if (_currentScene == GameState::PAUSE) {
@@ -202,8 +202,10 @@ void Game::draw()
     } else {
         _rooms[_currentRoom]->draw(_window);
         _player.draw(_window);
-        _interactText.setFont(_interactFont);
-        _window.draw(_interactText);
+        if (!_screaming) {
+            _interactText.setFont(_interactFont);
+            _window.draw(_interactText);
+        }
         _window.display();
     }
 }
@@ -230,4 +232,19 @@ std::vector<IRoom *> Game::getRooms() const
 sf::Music::Status Game::getNarrationStatus() const
 {
     return _narrations[_currentRoom].get()->getStatus();
+}
+
+void Game::setScene(GameState scene)
+{
+    _currentScene = GameState::GAME;
+}
+
+bool Game::getScreaming() const
+{
+    return _screaming;
+}
+
+void Game::setScreaming(bool screaming)
+{
+    _screaming = screaming;
 }

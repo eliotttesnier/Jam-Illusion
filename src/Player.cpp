@@ -87,6 +87,20 @@ void Player::handleInput(std::vector<Object *> objects)
                     interactionClock.restart();
                     break;
                 }
+                if (object->getType() == Object::Type::LIBRARY) {
+                    if (_game->getNarrationStatus() == sf::Music::Playing)
+                        break;
+                    if (object->isScreaming())
+                        break;
+                    object->scream();
+                    _game->setScreaming(true);
+                    interactionClock.restart();
+                    if (_game->getCurrentRoom() == 2)
+                        _game->getRooms()[2]->getObjects()[0]->unlock();
+                    if (_game->getCurrentRoom() == 5)
+                        _game->getRooms()[5]->getObjects()[0]->unlock();
+                    break;
+                }
             }
         }
         for (auto &pnj : _game->getRooms()[_game->getCurrentRoom()]->getPNJs()) {
@@ -98,6 +112,14 @@ void Player::handleInput(std::vector<Object *> objects)
                     _game->getRooms()[1]->getObjects()[0]->unlock();
                 if (_game->getCurrentRoom() == 3)
                     _game->getRooms()[3]->getObjects()[0]->unlock();
+                if (_game->getCurrentRoom() == 7)
+                    _game->getRooms()[7]->getObjects()[0]->unlock();
+                if (_game->getCurrentRoom() == 8)
+                    _game->getRooms()[8]->getObjects()[0]->unlock();
+                if (_game->getCurrentRoom() == 9)
+                    _game->getRooms()[9]->getObjects()[0]->unlock();
+                if (_game->getCurrentRoom() == 10)
+                    _game->getRooms()[10]->getObjects()[0]->unlock();
 
                 pnj->set_talking();
                 pnj->nextDialogue();
@@ -106,10 +128,17 @@ void Player::handleInput(std::vector<Object *> objects)
             }
         }
     }
+    for (auto &object : objects) {
+        if (object->getType() == Object::Type::LIBRARY && !object->isScreaming())
+            _game->setScreaming(false);
+    }
 }
 
 void Player::move(float deltaTime)
 {
+    if (_game->getScreaming())
+        return;
+
     if (_direction.x != 0 && _direction.y != 0) {
         _direction /= std::sqrt(2.0f);
     }
@@ -176,6 +205,9 @@ void Player::animate(float deltaTime)
 
 void Player::draw(sf::RenderWindow &window)
 {
+    if (_game->getScreaming())
+        return;
+
     _sprite.setTexture(_textures[_currentDirection][_currentFrame]);
     window.draw(_sprite);
 }

@@ -26,6 +26,13 @@ Object::Object(sf::FloatRect triggerBox, std::string name, Type type, ...)
         va_end(args);
     }
 
+    if (type == Type::LIBRARY) {
+        _screamerTexture.loadFromFile("assets/images/screamer.png");
+        _screamerSprite.setTexture(_screamerTexture);
+        _screamerSprite.setScale(sf::Vector2f(0.5, 0.5));
+        _screamerSound.openFromFile("assets/music/screamer.wav");
+    }
+
     for (int i = 0; i <= 4; ++i) {
         if (!_textures[i].loadFromFile("assets/animation/animation" + std::to_string(i + 1) + ".png")) {
             std::cerr << "Erreur de chargement de l'image interaction" << i + 1 << ".png" << std::endl;
@@ -76,6 +83,17 @@ void Object::draw(sf::RenderWindow &window)
 {
     _sprite.setTexture(_textures[_currentFrame]);
     window.draw(_sprite);
+
+    if (_type == Type::LIBRARY && isScreaming()) {
+        sf::View view = window.getView();
+
+        _screamerSprite.setScale(
+            view.getSize().x / _screamerSprite.getLocalBounds().width,
+            view.getSize().y / _screamerSprite.getLocalBounds().height
+        );
+        _screamerSprite.setPosition(view.getCenter().x - view.getSize().x / 2, view.getCenter().y - view.getSize().y / 2);
+        window.draw(_screamerSprite);
+    }
 }
 
 std::string Object::getName() const
@@ -101,4 +119,16 @@ bool Object::isLocked() const
 void Object::unlock()
 {
     _isLocked = false;
+}
+
+void Object::scream()
+{
+    _screamerSound.setVolume(100);
+    _screamerSound.stop();
+    _screamerSound.play();
+}
+
+bool Object::isScreaming() const
+{
+    return _screamerSound.getStatus() == sf::Music::Playing;
 }

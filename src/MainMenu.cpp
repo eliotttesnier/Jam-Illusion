@@ -6,54 +6,55 @@
 */
 
 #include "MainMenu.hpp"
-#include <iostream>
+#include "Game.hpp"
 
-MainMenu::MainMenu() : selectedIndex(0) {
-    font.loadFromFile("assets/fonts/font.otf");
+MainMenu::MainMenu()
+{
+    _font.loadFromFile("assets/fonts/font.otf");
 
-    title.setFont(font);
-    title.setString("Menu Principal");
-    title.setCharacterSize(50);
-    title.setPosition(300, 100);
+    _title.setFont(_font);
+    _title.setString("Jamy-llusion");
+    _title.setCharacterSize(100);
+    _title.setFillColor(sf::Color::White);
+    _title.setPosition(1920 / 2 - _title.getGlobalBounds().width / 2, 150);
 
-    std::vector<std::string> texts = {"Jouer", "Quitter"};
-    for (size_t i = 0; i < texts.size(); i++) {
-        sf::Text text;
-        text.setFont(font);
-        text.setString(texts[i]);
-        text.setCharacterSize(30);
-        text.setPosition(350, 200 + i * 50);
-        options.push_back(text);
-    }
+    _playButton.setFont(_font);
+    _playButton.setString("Play");
+    _playButton.setCharacterSize(50);
+    _playButton.setFillColor(sf::Color::White);
+    _playButton.setOutlineColor(sf::Color::Red);
+    _playButton.setPosition(1920 / 2 - _playButton.getGlobalBounds().width / 2, 350);
+    _playButton.setOutlineThickness(5);
 }
 
-void MainMenu::handleEvent(sf::Event& event) {
+
+MainMenu::~MainMenu() {}
+
+void MainMenu::handleEvent(sf::Event& event, sf::RenderWindow& window, Game& game) {
     if (event.type == sf::Event::KeyPressed) {
-        if (event.key.code == sf::Keyboard::Up) {
-            selectedIndex = (selectedIndex > 0) ? selectedIndex - 1 : options.size() - 1;
-            std::cout << "Option sélectionnée : " << options[selectedIndex].getString().toAnsiString() << std::endl;
+        if (event.key.code == sf::Keyboard::Enter) {
         }
-        else if (event.key.code == sf::Keyboard::Down) {
-            selectedIndex = (selectedIndex < options.size() - 1) ? selectedIndex + 1 : 0;
-            std::cout << "Option sélectionnée : " << options[selectedIndex].getString().toAnsiString() << std::endl;
-        }
-        else if (event.key.code == sf::Keyboard::Enter) {
-            if (selectedIndex == 0) {
-                std::cout << "Lancement du jeu..." << std::endl;
-            }
-            else if (selectedIndex == 1) {
-                std::cout << "Fermeture du jeu..." << std::endl;
-                exit(0);
+    }
+    if (event.type == sf::Event::MouseButtonPressed) {
+        if (event.mouseButton.button == sf::Mouse::Left) {
+            sf::Vector2i mousePos = sf::Mouse::getPosition(window);
+            if (_playButton.getGlobalBounds().contains(static_cast<sf::Vector2f>(mousePos))) {
+                game.setScene(GameState::GAME);
             }
         }
     }
 }
 
+
+
+void MainMenu::update()
+{
+
+}
 
 void MainMenu::draw(sf::RenderWindow& window) {
-    window.draw(title);
-    for (size_t i = 0; i < options.size(); i++) {
-        options[i].setFillColor(i == selectedIndex ? sf::Color::Red : sf::Color::White);
-        window.draw(options[i]);
-    }
+    _title.setFont(_font);
+    window.draw(_title);
+    _playButton.setFont(_font);
+    window.draw(_playButton);
 }
