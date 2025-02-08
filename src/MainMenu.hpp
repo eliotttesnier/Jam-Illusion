@@ -19,9 +19,7 @@ private:
 
 public:
     MainMenu();
-    void handleEvent() override;
-    void update() override;
-    void render(sf::RenderWindow& window) override;
+    void handleEvent(sf::Event& event) override;
+    void update() override {}
+    void draw(sf::RenderWindow& window) override;
 };
-
-
