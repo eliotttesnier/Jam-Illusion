@@ -12,17 +12,16 @@
 class ScreenFade {
     public:
         ScreenFade(sf::RenderWindow &window, sf::View &view);
+
         void update(float deltaTime);
-        void draw(sf::RenderWindow& window);
+        void draw(sf::RenderWindow &window);
         bool isFinished() const;
 
     private:
-        sf::RenderTexture _renderTexture;
-        sf::Sprite _renderSprite;
-        sf::CircleShape _topArc;
-        sf::CircleShape _bottomArc;
-        sf::Font _font;
-        sf::Text _gameOverText;
+        sf::Texture _eyeTexture;
+        sf::Sprite _topEye;
+        sf::Sprite _bottomEye;
+
         sf::Vector2u _windowSize;
         float _animationProgress;
         bool _animationFinished;
