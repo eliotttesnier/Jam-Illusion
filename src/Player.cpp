@@ -108,6 +108,7 @@ void Player::handleInput(std::vector<Object *> objects)
                 if (object->getType() == Object::Type::BARREL) {
                     if (_game->getNarrationStatus() == sf::Music::Playing)
                         break;
+                    object->barrelSound();
                     interactionClock.restart();
                     if (_game->getCurrentRoom() == 4)
                         _game->getRooms()[4]->getObjects()[0]->unlock();
