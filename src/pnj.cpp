@@ -66,7 +66,7 @@ void PNJ::set_talking()
 
 void PNJ::draw(sf::RenderWindow& window)
 {
-    if (_talking && _talkingTimer.getElapsedTime().asSeconds() > 2) {
+    if (_talking && _talkingTimer.getElapsedTime().asSeconds() > 4) {
         _talking = false;
     }
     if (_animationClock.getElapsedTime().asSeconds() > 0.1f) {

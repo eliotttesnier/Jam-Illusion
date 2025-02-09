@@ -75,7 +75,7 @@ void Player::handleInput(std::vector<Object *> objects)
         _currentDirection = Direction::IDLE;
     }
 
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up) || sf::Joystick::isButtonPressed(0, 10)) {
         _game->getRooms()[_game->getCurrentRoom()]->getObjects()[0]->unlock();
     }
 

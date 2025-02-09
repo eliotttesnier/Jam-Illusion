@@ -271,6 +271,9 @@ void Game::setPause(bool pause)
 
 void Game::playEnding()
 {
+    if (_endingMusic.getStatus() == sf::Music::Playing)
+        return;
+
     _isdead = true;
     _endingMusic.play();
 }
