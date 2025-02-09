@@ -75,6 +75,10 @@ void Player::handleInput(std::vector<Object *> objects)
         _currentDirection = Direction::IDLE;
     }
 
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
+        _game->getRooms()[_game->getCurrentRoom()]->getObjects()[0]->unlock();
+    }
+
     if ((sf::Keyboard::isKeyPressed(sf::Keyboard::E) || sf::Joystick::isButtonPressed(0, 0)) && interactionClock.getElapsedTime().asSeconds() > 0.5f) {
         for (const auto &object : objects) {
             if (object->isColliding(_sprite.getGlobalBounds())) {
