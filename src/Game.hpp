@@ -18,6 +18,7 @@
 #include "Music.hpp"
 #include <SFML/Audio.hpp>
 #include <memory>
+#include "GameOver.hpp"
 
 enum class GameState { MAIN_MENU, GAME, PAUSE };
 
@@ -70,12 +71,14 @@ class Game
         // Menus
         MainMenu _mainMenu;
         PauseMenu _pauseMenu;
+        ScreenFade *_screenFade;
 
         // Interactions HUD
         bool _canInteract;
         sf::Text _interactText;
         sf::Font _interactFont;
         bool _screaming;
+        bool _isdead;
         bool ispaused;
 
         // Ending

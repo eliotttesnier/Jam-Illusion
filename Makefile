@@ -23,6 +23,7 @@ SRC =   src/main.cpp					\
 		src/dialogueLoader.cpp			\
 		src/pnj.cpp						\
 		src/Music.cpp					\
+		src/GameOver.cpp				\
 		src/rooms/Room.cpp				\
 		src/rooms/Exterior.cpp			\
 		src/rooms/FirstRoom.cpp			\

@@ -52,6 +52,7 @@ Game::Game()
     _mainMenu = MainMenu();
     _currentMenu = &_mainMenu;
     _pauseMenu = PauseMenu();
+    _screenFade = new ScreenFade(_window, _view);
     _canInteract = false;
     _interactFont.loadFromFile("assets/fonts/font.otf");
     _interactText.setFont(_interactFont);
@@ -59,7 +60,7 @@ Game::Game()
     _interactText.setScale(0.25, 0.25);
     _interactText.setFillColor(sf::Color(255, 255, 255, 0));
     _interactText.setString("Appuyez sur E (Clavier) ou B (Manette) pour interagir...");
-
+    _isdead = false;
     _endingMusic.openFromFile("assets/music/ending.wav");
     _player.setGame(this);
     ispaused = false;
@@ -100,6 +101,10 @@ void Game::processEvents() {
                 std::cout << "Pause activée..." << std::endl;
                 _currentScene = GameState::PAUSE;
                 _currentMenu = &_pauseMenu;
+            }
+            if ((event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::P)) {
+                std::cout << "mort\n";
+                _isdead = true;
             }
         }
         else if (_currentScene == GameState::PAUSE) {
@@ -152,6 +157,9 @@ void Game::update()
     _window.setView(_view);
 
     // Interactions HUD
+    if (_isdead) {
+        _screenFade->update(_deltaTime);
+    }
     bool blocked = false;
     _canInteract = false;
     for (auto &Object : _rooms[_currentRoom]->getObjects()) {
@@ -210,6 +218,9 @@ void Game::draw()
         if (!_screaming) {
             _interactText.setFont(_interactFont);
             _window.draw(_interactText);
+        }
+        if (_isdead) {
+            _screenFade->draw(_window);
         }
         _window.display();
     }
