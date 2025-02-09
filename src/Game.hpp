@@ -46,6 +46,8 @@ class Game
         void setScreaming(bool screaming);
         void setPause(bool pause);
 
+        void playEnding();
+
     protected:
     private:
         // Scene logic
@@ -78,4 +80,7 @@ class Game
         bool _screaming;
         bool _isdead;
         bool ispaused;
+
+        // Ending
+        sf::Music _endingMusic;
 };

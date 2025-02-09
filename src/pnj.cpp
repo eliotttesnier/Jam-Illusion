@@ -28,7 +28,7 @@ PNJ::PNJ(const sf::Vector2f& position, const std::string& dialogueFile)
     _dialogueIndex = 0;
 
     if (_dialogues.empty()) {
-        _dialogues.push_back("...");
+        _dialogues.push_back(L"...");
     }
 
     if (_font.loadFromFile("assets/fonts/font.otf")) {
@@ -38,7 +38,7 @@ PNJ::PNJ(const sf::Vector2f& position, const std::string& dialogueFile)
     const sf::Vector2f scale{0.33f, 0.33f};
     _dialogueText.setScale(scale);
     _dialogueText.setFillColor(sf::Color::White);
-    _dialogueText.setString(_dialogues[_dialogueIndex]);
+    _dialogueText.setString(sf::String(_dialogues[_dialogueIndex]));
     _dialogueText.setPosition(position.x - (_dialogueText.getGlobalBounds().width / 2), position.y - _dialogueText.getGlobalBounds().height - 10);
     _talking = false;
     _talkingTimer.restart();
@@ -51,9 +51,9 @@ PNJ::~PNJ()
 
 }
 
-std::string PNJ::getNextDialogue()
+std::wstring PNJ::getNextDialogue()
 {
-    std::string message = _dialogues[_dialogueIndex];
+    std::wstring message = _dialogues[_dialogueIndex];
     _dialogueIndex = (_dialogueIndex + 1) % _dialogues.size();
     return message;
 }
@@ -104,5 +104,5 @@ void PNJ::nextDialogue()
 
     _interactionClock.restart();
     _dialogueIndex = (_dialogueIndex + 1) % _dialogues.size();
-    _dialogueText.setString(_dialogues[_dialogueIndex]);
+    _dialogueText.setString(sf::String(_dialogues[_dialogueIndex]));
 }

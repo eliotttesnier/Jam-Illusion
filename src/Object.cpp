@@ -37,6 +37,10 @@ Object::Object(sf::FloatRect triggerBox, std::string name, Type type, ...)
         _screamerSound.openFromFile("assets/music/" + name + ".wav");
     }
 
+    if (type == Type::BARREL) {
+        _barrelSound.openFromFile("assets/music/ah.wav");
+    }
+
     for (int i = 0; i <= 4; ++i) {
         if (!_textures[i].loadFromFile("assets/animation/animation" + std::to_string(i + 1) + ".png")) {
             std::cerr << "Erreur de chargement de l'image interaction" << i + 1 << ".png" << std::endl;
@@ -62,7 +66,10 @@ void Object::update()
 {
     if (_isAnimating) {
         if (_animationClock.getElapsedTime().asSeconds() >= 0.1f) {
-            _sprite.setPosition(sf::Vector2f(_triggerBox.left + 10, _triggerBox.top - 20));
+            if (_type == Type::LIBRARY || _type == Type::DOOR)
+                _sprite.setPosition(sf::Vector2f(_triggerBox.left + 10, _triggerBox.top - 20));
+            else
+                _sprite.setPosition(sf::Vector2f(_triggerBox.left, _triggerBox.top));
             _currentFrame = (_currentFrame + 1) % 5;
             _sprite.setTexture(_textures[_currentFrame]);
             _animationClock.restart();
@@ -135,4 +142,11 @@ void Object::scream()
 bool Object::isScreaming() const
 {
     return _screamerSound.getStatus() == sf::Music::Playing;
+}
+
+void Object::barrelSound()
+{
+    _barrelSound.setVolume(100);
+    _barrelSound.stop();
+    _barrelSound.play();
 }

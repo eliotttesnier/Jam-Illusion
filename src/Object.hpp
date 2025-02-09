@@ -15,6 +15,8 @@ class Object {
         enum Type {
             DOOR,
             LIBRARY,
+            BARREL,
+            BED,
         };
 
         Object(sf::FloatRect triggerBox, std::string name, Type type = Type::DOOR, ...);
@@ -36,6 +38,8 @@ class Object {
         void scream();
         bool isScreaming() const;
 
+        void barrelSound();
+
     protected:
     private:
         sf::FloatRect _triggerBox;
@@ -50,6 +54,9 @@ class Object {
         sf::Texture _screamerTexture;
         sf::Sprite _screamerSprite;
         sf::Music _screamerSound;
+
+        // Barrel
+        sf::Music _barrelSound;
 
         // Animation
         sf::Sprite _sprite;

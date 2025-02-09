@@ -9,17 +9,18 @@
 #include <fstream>
 #include <iostream>
 
-std::vector<std::string> DialogueLoader::loadFromFile(const std::string& filename)
+std::vector<std::wstring> DialogueLoader::loadFromFile(const std::string& filename)
 {
-    std::vector<std::string> dialogues;
-    std::ifstream file(filename);
+    std::vector<std::wstring> dialogues;
+    std::wifstream file(filename);
 
     if (!file.is_open()) {
-        std::cerr << "Erreur : Impossible d'ouvrir le fichier " << filename << std::endl;
+        std::wcerr << L"Erreur : Impossible d'ouvrir le fichier " << filename.c_str() << std::endl;
         return dialogues;
     }
 
-    std::string line;
+    file.imbue(std::locale(""));
+    std::wstring line;
     while (std::getline(file, line)) {
         if (!line.empty()) {
             dialogues.push_back(line);
