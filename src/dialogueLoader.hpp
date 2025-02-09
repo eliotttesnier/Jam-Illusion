@@ -11,5 +11,5 @@
 
 class DialogueLoader {
     public:
-        static std::vector<std::string> loadFromFile(const std::string& filename);
+        static std::vector<std::wstring> loadFromFile(const std::string& filename);
 };

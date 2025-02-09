@@ -19,7 +19,7 @@ class PNJ {
         ~PNJ();
 
         //Getter
-        std::string getNextDialogue();
+        std::wstring getNextDialogue();
 
         //Setter
         void set_talking();
@@ -34,7 +34,7 @@ class PNJ {
         sf::FloatRect _triggerBox;
         sf::Vector2f pos;
         bool _talking;
-        std::vector<std::string> _dialogues;
+        std::vector<std::wstring> _dialogues;
         int _dialogueIndex;
         static sf::Clock _interactionClock;
         static constexpr float _interactionCooldown = 0.5f;
