@@ -16,6 +16,7 @@ class Object {
             DOOR,
             LIBRARY,
             BARREL,
+            BED,
         };
 
         Object(sf::FloatRect triggerBox, std::string name, Type type = Type::DOOR, ...);

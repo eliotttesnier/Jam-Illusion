@@ -60,6 +60,7 @@ Game::Game()
     _interactText.setFillColor(sf::Color(255, 255, 255, 0));
     _interactText.setString("Appuyez sur E (Clavier) ou B (Manette) pour interagir...");
 
+    _endingMusic.openFromFile("assets/music/ending.wav");
     _player.setGame(this);
     ispaused = false;
     setCurrentRoom(0);
@@ -256,4 +257,9 @@ void Game::setScreaming(bool screaming)
 void Game::setPause(bool pause)
 {
     ispaused = pause;
+}
+
+void Game::playEnding()
+{
+    _endingMusic.play();
 }

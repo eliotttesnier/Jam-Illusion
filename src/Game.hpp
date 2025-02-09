@@ -45,6 +45,8 @@ class Game
         void setScreaming(bool screaming);
         void setPause(bool pause);
 
+        void playEnding();
+
     protected:
     private:
         // Scene logic
@@ -75,4 +77,7 @@ class Game
         sf::Font _interactFont;
         bool _screaming;
         bool ispaused;
+
+        // Ending
+        sf::Music _endingMusic;
 };

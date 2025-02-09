@@ -114,6 +114,14 @@ void Player::handleInput(std::vector<Object *> objects)
                         _game->getRooms()[4]->getObjects()[0]->unlock();
                     break;
                 }
+                if (object->getType() == Object::Type::BED) {
+                    if (_game->getNarrationStatus() == sf::Music::Playing)
+                        break;
+                    std::cout << "You won the game!" << std::endl;
+                    _game->playEnding();
+                    interactionClock.restart();
+                    break;
+                }
             }
         }
         for (auto &pnj : _game->getRooms()[_game->getCurrentRoom()]->getPNJs()) {
