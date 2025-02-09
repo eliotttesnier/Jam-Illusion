@@ -102,10 +102,6 @@ void Game::processEvents() {
                 _currentScene = GameState::PAUSE;
                 _currentMenu = &_pauseMenu;
             }
-            if ((event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::P)) {
-                std::cout << "mort\n";
-                _isdead = true;
-            }
         }
         else if (_currentScene == GameState::PAUSE) {
             if (getNarrationStatus() == sf::Music::Playing)
@@ -200,6 +196,9 @@ void Game::update()
         _interactText.setFillColor(sf::Color(255, 255, 255, opacity));
         timer.restart();
     }
+    if (_isdead && _endingMusic.getStatus() == sf::Music::Stopped) {
+        _window.close();
+    }
 }
 
 void Game::draw()
@@ -272,5 +271,6 @@ void Game::setPause(bool pause)
 
 void Game::playEnding()
 {
+    _isdead = true;
     _endingMusic.play();
 }

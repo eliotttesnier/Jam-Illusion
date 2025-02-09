@@ -117,7 +117,6 @@ void Player::handleInput(std::vector<Object *> objects)
                 if (object->getType() == Object::Type::BED) {
                     if (_game->getNarrationStatus() == sf::Music::Playing)
                         break;
-                    std::cout << "You won the game!" << std::endl;
                     _game->playEnding();
                     interactionClock.restart();
                     break;
