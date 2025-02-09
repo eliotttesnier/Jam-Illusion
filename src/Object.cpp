@@ -62,7 +62,10 @@ void Object::update()
 {
     if (_isAnimating) {
         if (_animationClock.getElapsedTime().asSeconds() >= 0.1f) {
-            _sprite.setPosition(sf::Vector2f(_triggerBox.left + 10, _triggerBox.top - 20));
+            if (_type == Type::LIBRARY || _type == Type::DOOR)
+                _sprite.setPosition(sf::Vector2f(_triggerBox.left + 10, _triggerBox.top - 20));
+            else
+                _sprite.setPosition(sf::Vector2f(_triggerBox.left, _triggerBox.top));
             _currentFrame = (_currentFrame + 1) % 5;
             _sprite.setTexture(_textures[_currentFrame]);
             _animationClock.restart();
