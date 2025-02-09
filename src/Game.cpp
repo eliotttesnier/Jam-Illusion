@@ -52,7 +52,7 @@ Game::Game()
     _mainMenu = MainMenu();
     _currentMenu = &_mainMenu;
     _pauseMenu = PauseMenu();
-    _screenFade = new ScreenFade(_window.getSize());
+    _screenFade = new ScreenFade(_window, _view);
     _canInteract = false;
     _interactFont.loadFromFile("assets/fonts/font.otf");
     _interactText.setFont(_interactFont);
