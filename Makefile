@@ -44,7 +44,7 @@ CFLAGS =	-std=c++20 -Wall -Wextra -Werror -Wno-unused-parameter \
 LIBS =  -lsfml-window -lsfml-graphics -lsfml-system -lsfml-audio \
 		-lsfml-network
 
-NAME =  Game
+NAME =  Jamy-llusion
 
 CC = g++
 
